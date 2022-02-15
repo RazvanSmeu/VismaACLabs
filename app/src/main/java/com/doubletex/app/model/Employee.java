@@ -1,9 +1,6 @@
 package com.doubletex.app.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -24,6 +21,4 @@ public class Employee {
     @Column(nullable = false, updatable = false)
     private Long id;
     private String name;
-
-
 }
