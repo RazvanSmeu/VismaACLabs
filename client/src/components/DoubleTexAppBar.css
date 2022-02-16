@@ -1,3 +1,8 @@
 .DoubleTexAppBar {
 	background-color: purple;
+	font-size: 30px;
+}
+
+.DoubleTexAppBar svg.MuiSvgIcon-root {
+	font-size: 30px;
 }

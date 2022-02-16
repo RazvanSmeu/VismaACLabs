@@ -1,39 +1,36 @@
 import React from "react";
 import "./DoubleTexAppBar.css";
 import AppBar from '@mui/material/AppBar';
-import { IconButton, Toolbar, Typography } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import PersonIcon from "@mui/icons-material/Person";
+import {Button, IconButton, Toolbar, Typography} from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import { Box } from "@mui/system";
-import { Search } from "@mui/icons-material";
+import {AccountBox, Inventory, Work} from "@mui/icons-material";
+
+function redirect(path: string) {
+	return () => window.location.href = path;
+}
 
 export function DoubleTexAppBar() {
 	return (
 		<AppBar position="sticky" className="DoubleTexAppBar">
 			<Toolbar>
-				<IconButton color="inherit" sx={{mr: 2}}>
-					<MenuIcon/>
-				</IconButton>
 				<Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            DoubleTex
+					variant="h4"
+					noWrap
+					component="div"
+					sx={{ display: { xs: 'none', sm: 'block' }, cursor: "pointer" }}
+					onClick={redirect("/")}
+				  >
+					DoubleTex
 				</Typography>
 				<Box sx={{ flexGrow: 1 }} />
-				<IconButton color="inherit">
-					<PersonIcon/>
-				</IconButton>
-				<IconButton color="inherit">
-					<GroupIcon/>
-				</IconButton>
-				<IconButton color="inherit">
-					<LocalOfferIcon/>
-				</IconButton>
+				<Button startIcon={<GroupIcon />} disableElevation variant="contained" onClick={redirect("/employees")}>Employees</Button>
+				<Button startIcon={<LocalOfferIcon />} disableElevation variant="contained" onClick={redirect("/products")}>Products</Button>
+				<Button startIcon={<Inventory />} disableElevation variant="contained" onClick={redirect("/inventory")}>Inventory</Button>
+				<Button startIcon={<Work />} disableElevation variant="contained" onClick={redirect("/company")}>Company</Button>
+				<Box width={30} />
+				<Button startIcon={<AccountBox />} disableElevation variant="contained" onClick={redirect("/account")}>Account</Button>
 			</Toolbar>
 		</AppBar>
 	);
