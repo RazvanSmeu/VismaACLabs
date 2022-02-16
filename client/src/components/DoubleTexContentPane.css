@@ -3,5 +3,6 @@ body {
 }
 
 .doubleTex__contentPane {
-    padding: 100px;
+    padding: 60px 100px;
+	overflow-y: auto;
 }
