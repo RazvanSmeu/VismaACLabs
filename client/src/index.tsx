@@ -13,12 +13,13 @@ ReactDOM.render(
                 main: purple[700]
             }
         },
-				typography: {
-					fontFamily: [
-						'Comfortaa'
-					].join(","),
-					fontWeightBold: 900,
-				}
+        typography: {
+            fontFamily: [
+                'Comfortaa'
+            ].join(","),
+            fontWeightBold: 900,
+            fontSize: 16
+        }
     })}>
         <App />
     </ThemeProvider>

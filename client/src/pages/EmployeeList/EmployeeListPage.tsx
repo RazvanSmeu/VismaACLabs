@@ -3,8 +3,9 @@ import "./EmployeeListPage.css";
 import { EmployeeTable } from "./EmployeeTable";
 import * as faker from "faker";
 import { Employee } from "../../types/Employee";
+import {useMockDataBook} from "../../utils/DataBook";
 
-const TEST_EMPLOYEE_DATA: Employee[] = Array.from(Array(10).keys()).map(() => ({
+const TEST_EMPLOYEE_DATA: Employee[] = Array.from(Array(50).keys()).map(() => ({
 	id: faker.datatype.number(),
 	firstName: faker.name.firstName(),
 	lastName: faker.name.lastName(),
@@ -15,10 +16,11 @@ const TEST_EMPLOYEE_DATA: Employee[] = Array.from(Array(10).keys()).map(() => ({
 }))
 
 export function EmployeeListPage() {
+	const employeesBook = useMockDataBook(TEST_EMPLOYEE_DATA)
 	return (
 		<>
 			<h2>Employees</h2>
-			<EmployeeTable employees={TEST_EMPLOYEE_DATA}/>
+			<EmployeeTable employeesBook={employeesBook}/>
 		</>
 	);
 }

@@ -6,3 +6,7 @@
 .DoubleTexAppBar svg.MuiSvgIcon-root {
 	font-size: 30px;
 }
+
+.DoubleTexAppBar button {
+	font-weight: 900;
+}
