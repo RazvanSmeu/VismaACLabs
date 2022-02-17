@@ -18,15 +18,16 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/")
 public class RouteController {
 
-//    @GetMapping(value = "/page/{path:[^\\.]*}")
     @GetMapping(value = "/page")
     public String index() {
-        return "forward:/index.html";
+        return null;
     }
 
 
-    @GetMapping(value = "/")
-    public ModelAndView redirectWithUsingForwardPrefix(ModelMap model) {
-        return new ModelAndView("redirect:/page", model);
+//    @GetMapping(value = "/")
+    @GetMapping(value = "/{path:[^\\.]*}")
+    public String redirectWithUsingForwardPrefix(ModelMap model) {
+//        return new ModelAndView("redirect:/page", model);
+        return "forward:/index.html";
     }
 }
