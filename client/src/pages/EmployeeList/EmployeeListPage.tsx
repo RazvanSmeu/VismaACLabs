@@ -1,26 +1,29 @@
 import React from "react";
 import "./EmployeeListPage.css";
 import { EmployeeTable } from "./EmployeeTable";
-import * as faker from "faker";
 import { Employee } from "../../types/Employee";
-import {useMockDataBook} from "../../utils/DataBook";
+import {DataBook, Filter, Filtered, useMockDataBook} from "../../utils/DataBook";
+import {TEST_EMPLOYEE_DATA} from "./EmployeeListPage.stories";
 
-const TEST_EMPLOYEE_DATA: Employee[] = Array.from(Array(50).keys()).map(() => ({
-	id: faker.datatype.number(),
-	firstName: faker.name.firstName(),
-	lastName: faker.name.lastName(),
-	jobTitle: faker.name.jobTitle(),
-	birthdate: faker.date.past(),
-	monthlySalary: faker.datatype.number(),
-	monthlyHourQuota: faker.datatype.number()
-}))
+export type ByName = Filter<"ByName">
+export type BirthdateBefore = Filter<"BirthdateBefore">
 
-export function EmployeeListPage() {
-	const employeesBook = useMockDataBook(TEST_EMPLOYEE_DATA)
+export type EmployeeListFilters = ByName | BirthdateBefore
+
+export type EmployeeListPageProps = {
+	employeesBook: DataBook<Employee> & Filtered<EmployeeListFilters>
+}
+
+export function EmployeeListPage({employeesBook}: EmployeeListPageProps) {
 	return (
 		<>
 			<h2>Employees</h2>
 			<EmployeeTable employeesBook={employeesBook}/>
 		</>
 	);
+}
+
+export function EmployeeListPageRoute() {
+	const employeesBook = useMockDataBook<Employee, EmployeeListFilters>(TEST_EMPLOYEE_DATA, ts => ts)
+	return <EmployeeListPage employeesBook={employeesBook}/>;
 }

@@ -1,13 +1,13 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import React from "react";
 import { Employee } from "../../types/Employee";
-import { DataGrid } from "@mui/x-data-grid";
 import {EmployeeRow} from "./EmployeeRow";
-import {EmployeeTableToolbar} from "./EmployeeTableToolbar";
-import {DataBook} from "../../utils/DataBook";
+import {createAdvancedBookControls, DataBook, FilteredDataBook} from "../../utils/DataBook";
+import {TableToolbar} from "../../components/TableToolbar";
+import {EmployeeListFilters} from "./EmployeeListPage";
 
 export type EmployeeTableProps = {
-	employeesBook: DataBook<Employee>;
+	employeesBook: FilteredDataBook<Employee, EmployeeListFilters>;
 }
 
 export function EmployeeTable({
@@ -15,20 +15,24 @@ export function EmployeeTable({
 }: EmployeeTableProps) {
 	return (
 		<TableContainer component={Paper} className={"employeeTable"}>
-			<EmployeeTableToolbar employeesBook={employeesBook}/>
+			<TableToolbar book={createAdvancedBookControls(employeesBook)}/>
 			<Table>
 				<TableHead>
 					<TableRow key="header">
-						<TableCell>First Name</TableCell>
-						<TableCell>Last Name</TableCell>
-						<TableCell>Job</TableCell>
-						<TableCell>Salary</TableCell>
-						<TableCell>Quota</TableCell>
-						<TableCell>Birthdate</TableCell>
+						<TableCell width={200}>First Name</TableCell>
+						<TableCell width={200}>Last Name</TableCell>
+						<TableCell width={300}>Job</TableCell>
+						<TableCell width={150}>Salary</TableCell>
+						<TableCell width={150}>Quota</TableCell>
+						<TableCell width={200}>Birthdate</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{ employeesBook.page.map((employee) => <EmployeeRow employee={employee}/>) }
+					{
+						employeesBook.page ?
+							(employeesBook.page.map((employee) => <EmployeeRow employee={employee}/>)) :
+							<div>Loading</div>
+					}
 				</TableBody>
 			</Table>
 		</TableContainer>

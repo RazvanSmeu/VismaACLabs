@@ -4,6 +4,7 @@ th.MuiTableCell-head {
 }
 
 .employeeTable {
+	background-color: white;
 	min-height: 800px;
 	border: 1px solid teal !important;
 	border-radius: 4px;
