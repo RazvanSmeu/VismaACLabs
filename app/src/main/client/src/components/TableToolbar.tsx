@@ -4,13 +4,13 @@ import {Box, IconButton, Input} from "@mui/material";
 import {
     ArrowLeft,
     ArrowRight,
-    KeyboardArrowLeft, KeyboardArrowRight, KeyboardArrowRightRounded, KeyboardArrowRightSharp,
+    KeyboardArrowLeft, KeyboardArrowRight,
     KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight,
 } from "@mui/icons-material";
-import {AdvancedBookControls, BookMetaData, FilteredDataBook, Filter} from "../utils/DataBook";
+import {AdvancedBookControls, FilteredDataBook} from "../utils/DataBook";
 import {Employee} from "../types/Employee";
 import {EmployeeListFilters} from "../pages/EmployeeList/EmployeeListPage";
-
+import { Filter } from "../utils/Filter";
 
 export type TableToolbarProps = {
     book: FilteredDataBook<Employee, EmployeeListFilters> & AdvancedBookControls;
@@ -21,13 +21,15 @@ export function TableToolbar({book}: TableToolbarProps) {
         <div className="tableToolbar">
             <Input
                 onChange={(event) => {
-                    book.setFilters([
-                        ...book.filters,
-                        new Filter("ByName", event.target.value)
-                    ])
+										const query = event.target.value;
+										// if(query) {
+											book.putFilter(new Filter("ByName", query))
+										// } else {
+										// 	book.clearFilter("ByName")
+										// }
                 }}
             />
-            {/*<Box sx={{ flexGrow: 1 }} />*/}
+            <Box sx={{ flexGrow: 1 }} />
             <IconButton onClick={() => book.toFirstPage()}>
                 <ArrowLeft/>
             </IconButton>

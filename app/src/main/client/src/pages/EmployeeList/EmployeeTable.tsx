@@ -2,7 +2,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import React from "react";
 import { Employee } from "../../types/Employee";
 import {EmployeeRow} from "./EmployeeRow";
-import {createAdvancedBookControls, DataBook, FilteredDataBook} from "../../utils/DataBook";
+import {createAdvancedBookControls, FilteredDataBook} from "../../utils/DataBook";
 import {TableToolbar} from "../../components/TableToolbar";
 import {EmployeeListFilters} from "./EmployeeListPage";
 

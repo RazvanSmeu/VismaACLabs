@@ -1,7 +1,7 @@
 import React from "react";
 import "./DoubleTexAppBar.css";
 import AppBar from '@mui/material/AppBar';
-import {Button, IconButton, Toolbar, Typography} from "@mui/material";
+import {Button, Toolbar, Typography} from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import { Box } from "@mui/system";

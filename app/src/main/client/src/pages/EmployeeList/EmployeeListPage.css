@@ -8,4 +8,9 @@ th.MuiTableCell-head {
 	min-height: 800px;
 	border: 1px solid teal !important;
 	border-radius: 4px;
+	overflow-x: none;
+}
+
+.employeeTable tbody {
+	overflow-x: auto;
 }

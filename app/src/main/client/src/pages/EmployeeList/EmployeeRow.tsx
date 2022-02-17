@@ -12,7 +12,7 @@ export function EmployeeRow(props: EmployeeRowProps) {
 			<TableCell>{props.employee.firstName}</TableCell>
 			<TableCell>{props.employee.lastName}</TableCell>
 			<TableCell>{props.employee.jobTitle}</TableCell>
-			<TableCell>{props.employee.monthlySalary}</TableCell>
+			<TableCell>{props.employee.monthlySalary}$</TableCell>
 			<TableCell>{props.employee.monthlyHourQuota}</TableCell>
 			<TableCell>{props.employee.birthdate.toDateString()}</TableCell>
 		</TableRow>

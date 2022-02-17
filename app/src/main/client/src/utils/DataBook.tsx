@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import { Filter, Filtered } from "./Filter";
 
 export type BookControls = {
     setPageSize(size: number): void;
@@ -38,21 +39,6 @@ export function createAdvancedBookControls<BC extends BookControls & BookMetaDat
     };
 }
 
-export class Filter<Op>{
-    readonly operation: Op;
-    readonly parameters: string[];
-
-    public constructor(operation: Op, ...parameters: string[]) {
-        this.operation = operation;
-        this.parameters = parameters;
-    }
-}
-
-export type Filtered<Op extends Filter<any>> = {
-    filters: Op[];
-    setFilters(filters: Op[]): void;
-}
-
 export type BookMetaData = {
     pageSize: number;
     pageNumber: number;
@@ -66,15 +52,15 @@ export type BookData<T> = {
 
 export type DataBook<T> = BookControls & BookMetaData & BookData<T>;
 
-export type FilteredDataBook<T, Ops extends Filter<any>> = DataBook<T> & Filtered<Ops>;
+export type FilteredDataBook<T, Ops extends string> = DataBook<T> & Filtered<Ops>;
 
-export function useMockDataBook<T, Ops extends Filter<any>>(all: T[], filterInterpeter: (prev: T[], filter: Ops) => T[], initialPageSize: number = 10, initialPageNumber: number = 1): FilteredDataBook<T, Ops> {
+export function useMockDataBook<T, Ops extends string>(all: T[], filterInterpeter: (prev: T, filter: Filter<Ops>) => boolean, initialPageSize: number = 10, initialPageNumber: number = 0): FilteredDataBook<T, Ops> {
     const [pool, setPool] = useState(all);
     const [page, setPage] = useState(all);
     const [pageSize, setPageSize] = useState(initialPageSize);
     const [pageNumber, setPageNumber] = useState(initialPageNumber);
-    const [filters, setFiltersBasic] = useState<Ops[]>([]);
-    const pageLimit = Math.floor(all.length / pageSize)
+    const [filters, setFiltersBasic] = useState<Record<string, Filter<Ops>>>({});
+    const pageLimit = Math.floor(pool.length / pageSize)
 
     function setPageNumberSafe(number: number) {
         setPageNumber(Math.max(0, Math.min(pageLimit - 1, number)));
@@ -87,16 +73,32 @@ export function useMockDataBook<T, Ops extends Filter<any>>(all: T[], filterInte
 
     useEffect(() => {
         setPage(pool.slice(Math.max(0, pageNumber * pageSize), Math.min(pool.length, (pageNumber + 1) * pageSize)))
-    }, [pageNumber, pageSize])
+    }, [pageNumber, pageSize, pool])
 
-    function setFilters(filters: Ops[]) {
-        var current = pool;
-        for(const filter of filters) {
-            current = filterInterpeter(current, filter);
-        }
-        setFiltersBasic(filters);
+    function doFiltering(filters: Record<string, Filter<Ops>>) {
+        var current = all;
+				var currentMap: Record<string, Filter<Ops>> = {};
+        for(const filterOp in filters) {
+						const filter = filters[filterOp];
+            current = current.filter((value) => filterInterpeter(value, filter));
+				}
         setPool(current);
+				setFiltersBasic(filters)
     }
+
+		function putFilter(filter: Filter<Ops>): void {
+			doFiltering({
+				...filters,
+				[filter.operation]: filter
+			})
+		}
+
+		function clearFilter(filterOp: Ops): void {
+			const newFilters = filters;
+			delete newFilters[filterOp];
+			setFiltersBasic(newFilters);
+			doFiltering(newFilters);
+		}
 
     return {
         pageSize,
@@ -106,7 +108,8 @@ export function useMockDataBook<T, Ops extends Filter<any>>(all: T[], filterInte
         page,
         pageLimit,
         loaded: true,
-        filters,
-        setFilters
+        filters: Object.values(filters),
+        putFilter,
+				clearFilter
     }
 }

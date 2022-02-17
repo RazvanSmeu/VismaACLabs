@@ -1,6 +1,5 @@
 import React from "react";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {EmployeeListPage} from "../pages/EmployeeList/EmployeeListPage";
+import {BrowserRouter, Routes} from "react-router-dom";
 import "./DoubleTexContentPane.css";
 
 export type DoubleTexContentPaneProps = {
