@@ -10,10 +10,10 @@ function renderQuota(quota: number): React.ReactNode {
 	var render = quota + "h";
 	if(quota < 36) {
 		return <span style={{ color: "#888" }}>{render} - Part time</span>
-	} else if(quota  < 44) {
-		return <span style={{ color: "#555" }}>{render} - Full time</span>
+	} else if(quota <= 44) {
+		return <span style={{ color: "#000" }}>{render} - Full time</span>
 	} else {
-		return <span style={{ color: "#000" }}>{render} - Overtime</span>
+		return <span style={{ color: "#C00" }}>{render} - Overtime</span>
 	}
 }
 

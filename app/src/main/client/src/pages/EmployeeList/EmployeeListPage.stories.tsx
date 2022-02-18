@@ -14,8 +14,8 @@ export const TEST_EMPLOYEE_DATA: Employee[] = Array.from(Array(500).keys()).map(
     jobTitle: faker.name.jobTitle(),
     birthdate: faker.date.past(70),
     monthlySalary: faker.datatype.number(20) * 250 + 1000,
-    monthlyHourQuota: faker.datatype.number(3) * 20 + 20,
-    telephone: faker.phone.phoneNumber(),
+    monthlyHourQuota: faker.datatype.number(10) * 4 + 20,
+    telephone: faker.phone.phoneNumberFormat(1),
     email: faker.internet.email()
 }))
 
