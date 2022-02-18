@@ -7,4 +7,6 @@ export type Employee = Identifiable & {
 	monthlySalary: number;
 	monthlyHourQuota: number;
 	jobTitle: string;
+	email: string;
+	telephone: string;
 }

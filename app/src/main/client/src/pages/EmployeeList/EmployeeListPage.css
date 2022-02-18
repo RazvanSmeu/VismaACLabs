@@ -14,3 +14,16 @@ th.MuiTableCell-head {
 .employeeTable tbody {
 	overflow-x: auto;
 }
+
+.employeeTable thead {
+	background-color: #f2f5ff;
+}
+
+.employeeTable td:nth-child(1), td:nth-child(3) {
+	color: #0000BB;
+}
+
+.employeeTable td:nth-child(5) {
+	color: green;
+	font-weight: 500;
+}

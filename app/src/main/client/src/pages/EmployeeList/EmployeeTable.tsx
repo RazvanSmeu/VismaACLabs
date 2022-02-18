@@ -19,8 +19,9 @@ export function EmployeeTable({
 			<Table>
 				<TableHead>
 					<TableRow key="header">
-						<TableCell width={200}>First Name</TableCell>
-						<TableCell width={200}>Last Name</TableCell>
+						<TableCell width={200}>Name</TableCell>
+						<TableCell width={200}>Telephone</TableCell>
+						<TableCell width={300}>E-mail</TableCell>
 						<TableCell width={300}>Job</TableCell>
 						<TableCell width={150}>Salary</TableCell>
 						<TableCell width={150}>Quota</TableCell>

@@ -1,15 +1,7 @@
-export class Filter<Op>{
-	readonly operation: Op;
-	readonly parameters: string[];
-
-	public constructor(operation: Op, ...parameters: string[]) {
-			this.operation = operation;
-			this.parameters = parameters;
-	}
-}
+export type FilterOperation = string;
 
 export type Filtered<Op extends string> = {
-	filters: Filter<Op>[];
-	putFilter(filter: Filter<Op>): void;
+	filters: Map<FilterOperation, string[]>;
+	putFilter(operation: Op, ...parameters: string[]): void;
 	clearFilter(filterOp: Op): void;
 }

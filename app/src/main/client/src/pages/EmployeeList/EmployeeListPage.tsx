@@ -4,7 +4,7 @@ import { EmployeeTable } from "./EmployeeTable";
 import { Employee } from "../../types/Employee";
 import {DataBook, useMockDataBook} from "../../utils/DataBook";
 import {TEST_EMPLOYEE_DATA} from "./EmployeeListPage.stories";
-import { Filter, Filtered } from "../../utils/Filter";
+import { Filtered } from "../../utils/Filter";
 
 export type ByName = "ByName"
 export type BirthdateBefore = "BirthdateBefore"
@@ -25,6 +25,6 @@ export function EmployeeListPage({employeesBook}: EmployeeListPageProps) {
 }
 
 export function EmployeeListPageRoute() {
-	const employeesBook = useMockDataBook<Employee, EmployeeListFilters>(TEST_EMPLOYEE_DATA, ts => true)
+	const employeesBook = useMockDataBook<Employee, EmployeeListFilters>(TEST_EMPLOYEE_DATA, ts => true, 12)
 	return <EmployeeListPage employeesBook={employeesBook}/>;
 }

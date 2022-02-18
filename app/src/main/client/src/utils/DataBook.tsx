@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import { Filter, Filtered } from "./Filter";
+import { Filtered } from "./Filter";
 
 export type BookControls = {
     setPageSize(size: number): void;
@@ -54,12 +54,12 @@ export type DataBook<T> = BookControls & BookMetaData & BookData<T>;
 
 export type FilteredDataBook<T, Ops extends string> = DataBook<T> & Filtered<Ops>;
 
-export function useMockDataBook<T, Ops extends string>(all: T[], filterInterpeter: (prev: T, filter: Filter<Ops>) => boolean, initialPageSize: number = 10, initialPageNumber: number = 0): FilteredDataBook<T, Ops> {
+export function useMockDataBook<T, Ops extends string>(all: T[], filterInterpeter: (prev: T, filterOperation: Ops, parameters: string[]) => boolean, initialPageSize: number = 10, initialPageNumber: number = 0): FilteredDataBook<T, Ops> {
     const [pool, setPool] = useState(all);
     const [page, setPage] = useState(all);
     const [pageSize, setPageSize] = useState(initialPageSize);
     const [pageNumber, setPageNumber] = useState(initialPageNumber);
-    const [filters, setFiltersBasic] = useState<Record<string, Filter<Ops>>>({});
+    const [filters, setFiltersBasic] = useState<Map<Ops, string[]>>(new Map());
     const pageLimit = Math.floor(pool.length / pageSize)
 
     function setPageNumberSafe(number: number) {
@@ -75,27 +75,25 @@ export function useMockDataBook<T, Ops extends string>(all: T[], filterInterpete
         setPage(pool.slice(Math.max(0, pageNumber * pageSize), Math.min(pool.length, (pageNumber + 1) * pageSize)))
     }, [pageNumber, pageSize, pool])
 
-    function doFiltering(filters: Record<string, Filter<Ops>>) {
+    function doFiltering(filters: Map<Ops, string[]>) {
         var current = all;
-				var currentMap: Record<string, Filter<Ops>> = {};
-        for(const filterOp in filters) {
-						const filter = filters[filterOp];
-            current = current.filter((value) => filterInterpeter(value, filter));
-				}
+        filters.forEach((params, ops) => {
+            current = current.filter((value) => filterInterpeter(value, ops, params));
+        })
         setPool(current);
-				setFiltersBasic(filters)
+        setFiltersBasic(filters)
     }
 
-		function putFilter(filter: Filter<Ops>): void {
+		function putFilter(operation: Ops, ...parameters: string[]): void {
 			doFiltering({
 				...filters,
-				[filter.operation]: filter
+				[operation]: parameters
 			})
 		}
 
 		function clearFilter(filterOp: Ops): void {
 			const newFilters = filters;
-			delete newFilters[filterOp];
+			newFilters.delete(filterOp);
 			setFiltersBasic(newFilters);
 			doFiltering(newFilters);
 		}
@@ -108,8 +106,8 @@ export function useMockDataBook<T, Ops extends string>(all: T[], filterInterpete
         page,
         pageLimit,
         loaded: true,
-        filters: Object.values(filters),
+        filters,
         putFilter,
-				clearFilter
+        clearFilter
     }
 }

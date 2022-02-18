@@ -8,7 +8,7 @@ export function useEmployeeList(): EmployeeListPageProps {
 }
 
 export function useEmployeeListMock(): EmployeeListPageProps {
-    const employeesBook = useMockDataBook<Employee, EmployeeListFilters>(TEST_EMPLOYEE_DATA, (ts) => true);
+    const employeesBook = useMockDataBook<Employee, EmployeeListFilters>(TEST_EMPLOYEE_DATA, (ts) => true, 12);
     return {
         employeesBook
     }

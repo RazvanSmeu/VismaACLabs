@@ -10,7 +10,6 @@ import {
 import {AdvancedBookControls, FilteredDataBook} from "../utils/DataBook";
 import {Employee} from "../types/Employee";
 import {EmployeeListFilters} from "../pages/EmployeeList/EmployeeListPage";
-import { Filter } from "../utils/Filter";
 
 export type TableToolbarProps = {
     book: FilteredDataBook<Employee, EmployeeListFilters> & AdvancedBookControls;
@@ -21,12 +20,8 @@ export function TableToolbar({book}: TableToolbarProps) {
         <div className="tableToolbar">
             <Input
                 onChange={(event) => {
-										const query = event.target.value;
-										// if(query) {
-											book.putFilter(new Filter("ByName", query))
-										// } else {
-										// 	book.clearFilter("ByName")
-										// }
+                    const query = event.target.value;
+                    book.putFilter("ByName", query)
                 }}
             />
             <Box sx={{ flexGrow: 1 }} />

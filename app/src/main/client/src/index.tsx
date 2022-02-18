@@ -15,9 +15,9 @@ ReactDOM.render(
         },
         typography: {
             fontFamily: [
-                'Comfortaa'
+                'Ubuntu'
             ].join(","),
-            fontWeightBold: 900,
+            fontWeightBold: 700,
             fontSize: 16
         }
     })}>
