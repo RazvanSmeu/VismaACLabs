@@ -2,12 +2,13 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import React from "react";
 import { Employee } from "../../types/Employee";
 import {EmployeeRow} from "./EmployeeRow";
-import {createAdvancedBookControls, FilteredDataBook} from "../../utils/DataBook";
+import {DataBook, evolveBookControls} from "../../utils/DataBook";
 import {TableToolbar} from "../../components/TableToolbar";
-import {EmployeeListFilters} from "./EmployeeListPage";
+import { Filtered } from "../../utils/Filter";
+import { EmployeeListFilterOperation } from "./EmployeeListPage";
 
 export type EmployeeTableProps = {
-	employeesBook: FilteredDataBook<Employee, EmployeeListFilters>;
+	employeesBook: DataBook<Employee> & Filtered<EmployeeListFilterOperation>;
 }
 
 export function EmployeeTable({
@@ -15,16 +16,16 @@ export function EmployeeTable({
 }: EmployeeTableProps) {
 	return (
 		<TableContainer component={Paper} className={"employeeTable"}>
-			<TableToolbar book={createAdvancedBookControls(employeesBook)}/>
+			<TableToolbar book={evolveBookControls(employeesBook)}/>
 			<Table>
 				<TableHead>
 					<TableRow key="header">
-						<TableCell width={200}>Name</TableCell>
-						<TableCell width={200}>Telephone</TableCell>
-						<TableCell width={300}>E-mail</TableCell>
-						<TableCell width={300}>Job</TableCell>
+						<TableCell width={240}>Name</TableCell>
+						<TableCell width={180}>Telephone</TableCell>
+						<TableCell width={260}>E-mail</TableCell>
+						<TableCell width={240}>Job</TableCell>
 						<TableCell width={150}>Salary</TableCell>
-						<TableCell width={150}>Quota</TableCell>
+						<TableCell width={180}>Quota</TableCell>
 						<TableCell width={200}>Birthdate</TableCell>
 					</TableRow>
 				</TableHead>

@@ -3,6 +3,10 @@ th.MuiTableCell-head {
 	font-size: 16px;
 }
 
+table.MuiTable-root *{
+	font-size: 16px;
+}
+
 .employeeTable {
 	background-color: white;
 	min-height: 800px;

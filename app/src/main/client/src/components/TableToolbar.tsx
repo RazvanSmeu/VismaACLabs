@@ -7,12 +7,13 @@ import {
     KeyboardArrowLeft, KeyboardArrowRight,
     KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight,
 } from "@mui/icons-material";
-import {AdvancedBookControls, FilteredDataBook} from "../utils/DataBook";
+import {AdvancedBookControls, DataBook} from "../utils/DataBook";
 import {Employee} from "../types/Employee";
-import {EmployeeListFilters} from "../pages/EmployeeList/EmployeeListPage";
+import { EmployeeListFilterOperation } from "../pages/EmployeeList/EmployeeListPage";
+import { Filter, Filtered } from "../utils/Filter";
 
 export type TableToolbarProps = {
-    book: FilteredDataBook<Employee, EmployeeListFilters> & AdvancedBookControls;
+    book: DataBook<Employee> & AdvancedBookControls & Filtered<EmployeeListFilterOperation>;
 }
 
 export function TableToolbar({book}: TableToolbarProps) {
@@ -21,7 +22,7 @@ export function TableToolbar({book}: TableToolbarProps) {
             <Input
                 onChange={(event) => {
                     const query = event.target.value;
-                    book.putFilter("ByName", query)
+                    book.putFilter(new Filter("search_bar", EmployeeListFilterOperation.ByName, query))
                 }}
             />
             <Box sx={{ flexGrow: 1 }} />
