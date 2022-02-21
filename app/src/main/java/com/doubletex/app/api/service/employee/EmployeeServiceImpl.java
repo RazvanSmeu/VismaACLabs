@@ -2,14 +2,12 @@ package com.doubletex.app.api.service.employee;
 
 import com.doubletex.app.model.Employee;
 import com.doubletex.app.api.repository.EmployeeRepository;
-import com.doubletex.app.util.DataBookRequest;
-import com.doubletex.app.util.DataBookResponse;
+import com.doubletex.app.util.PageRequest;
+import com.doubletex.app.util.PageResponse;
 import com.doubletex.app.util.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.util.ArrayUtils;
 
 import java.util.List;
 
@@ -52,20 +50,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findAll(int limit) {
-        return employeeRepository.findAll(PageRequest.of(0, limit)).toList();
+        return employeeRepository.findAll(org.springframework.data.domain.PageRequest.of(0, limit)).toList();
     }
 
     @Override
-    public DataBookResponse<Employee> dataBookQuery(DataBookRequest<EmployeeService.FilterOperation> request) {
+    public PageResponse<Employee> dataBookQuery(PageRequest<FilterOperation> request) {
         String name = "";
         for(Filter<EmployeeService.FilterOperation> filter : request.getFilters()) {
             if(filter.getOperation() == FilterOperation.ByName) {
                 name = filter.getParameters()[0];
             }
         }
-        Page<Employee> page = employeeRepository.search(name, PageRequest.of(request.getPageNumber(), request.getPageSize()));
+        Page<Employee> page = employeeRepository.search(name, org.springframework.data.domain.PageRequest.of(request.getPageNumber(), request.getPageSize()));
 
-        DataBookResponse<Employee> response = new DataBookResponse<>();
+        PageResponse<Employee> response = new PageResponse<>();
         response.setPage(page.getContent().toArray(new Employee[0]));
         response.setPageLimit(page.getTotalPages());
 

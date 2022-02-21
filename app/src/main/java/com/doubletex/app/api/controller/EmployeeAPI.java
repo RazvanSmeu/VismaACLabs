@@ -2,8 +2,8 @@ package com.doubletex.app.api.controller;
 
 import com.doubletex.app.model.Employee;
 import com.doubletex.app.api.service.employee.EmployeeService;
-import com.doubletex.app.util.DataBookRequest;
-import com.doubletex.app.util.DataBookResponse;
+import com.doubletex.app.util.PageRequest;
+import com.doubletex.app.util.PageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class EmployeeAPI {
     }
 
     @PostMapping("/dataBookQuery")
-    public DataBookResponse<Employee> search(@RequestBody DataBookRequest<EmployeeService.FilterOperation> request) {
+    public PageResponse<Employee> search(@RequestBody PageRequest<EmployeeService.FilterOperation> request) {
         return employeeService.dataBookQuery(request);
     }
 }

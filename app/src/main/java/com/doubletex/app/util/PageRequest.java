@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DataBookRequest<Op> {
+public class PageRequest<Op> {
     private int pageNumber;
     private int pageSize;
     private Filter<Op>[] filters;

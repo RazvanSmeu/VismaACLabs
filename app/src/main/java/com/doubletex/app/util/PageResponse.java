@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DataBookResponse<T> {
+public class PageResponse<T> {
     private T[] page;
     private int pageLimit;
 }

@@ -1,10 +1,7 @@
 package com.doubletex.app.api.service.employee;
 
 import com.doubletex.app.model.Employee;
-import com.doubletex.app.util.DataBookRequest;
-import com.doubletex.app.util.DataBookResponse;
 import com.doubletex.app.util.RemoteScribe;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
