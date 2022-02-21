@@ -1,4 +1,4 @@
-package com.doubletex.app.repository;
+package com.doubletex.app.api.repository;
 
 import com.doubletex.app.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;

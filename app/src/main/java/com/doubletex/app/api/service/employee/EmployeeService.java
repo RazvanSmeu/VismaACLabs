@@ -1,8 +1,7 @@
-package com.doubletex.app.service.employee;
+package com.doubletex.app.api.service.employee;
 
 import com.doubletex.app.model.Employee;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
