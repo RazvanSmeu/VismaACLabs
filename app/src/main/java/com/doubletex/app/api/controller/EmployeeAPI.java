@@ -1,7 +1,7 @@
-package com.doubletex.app.api;
+package com.doubletex.app.api.controller;
 
 import com.doubletex.app.model.Employee;
-import com.doubletex.app.service.employee.EmployeeService;
+import com.doubletex.app.api.service.employee.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

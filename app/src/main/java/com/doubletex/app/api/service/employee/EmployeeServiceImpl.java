@@ -1,7 +1,7 @@
-package com.doubletex.app.service.employee;
+package com.doubletex.app.api.service.employee;
 
 import com.doubletex.app.model.Employee;
-import com.doubletex.app.repository.EmployeeRepository;
+import com.doubletex.app.api.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

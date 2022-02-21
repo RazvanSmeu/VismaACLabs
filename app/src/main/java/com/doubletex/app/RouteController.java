@@ -3,11 +3,7 @@ package com.doubletex.app;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * @author Alexandru Enache
@@ -18,16 +14,9 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/")
 public class RouteController {
 
-    @GetMapping(value = "/page")
-    public String index() {
-        return null;
-    }
-
-
 //    @GetMapping(value = "/")
     @GetMapping(value = "/{path:[^\\.]*}")
     public String redirectWithUsingForwardPrefix(ModelMap model) {
-//        return new ModelAndView("redirect:/page", model);
         return "forward:/index.html";
     }
 }
