@@ -17,10 +17,12 @@ export type DataBookResponse<T> = {
 	page: T[]
 }
 
+export type DataBookHandler<T, Ops extends FilterOperation> = (request: DataBookRequest<Ops>) => Promise<DataBookResponse<T>>
+
 export function useDataBook<T, Ops extends FilterOperation>(
+	handler: DataBookHandler<T, Ops>,
 	initialPageSize: number = 12,
 	initialPageNumber: number = 0,
-	handleRequest: (request: DataBookRequest<Ops>) => Promise<DataBookResponse<T>>
 ): DataBook<T> & Filtered<Ops> {
 	const [page, setPage] = useState<T[]>([]);
 	const [pageSize, setPageSize] = useState(initialPageSize);
@@ -35,7 +37,7 @@ export function useDataBook<T, Ops extends FilterOperation>(
 			filters
 		}
 		setLoaded(false);
-		const response = await handleRequest(request);
+		const response = await handler(request);
 		setLoaded(true);
 		setPage(response.page)
 		setPageLimit(response.pageLimit)
@@ -57,6 +59,22 @@ export function useDataBook<T, Ops extends FilterOperation>(
 		loaded,
 		...filterLedger
 	}
+}
+
+export function useMockDataBookHandler<T, Ops extends FilterOperation>(
+	all: T[],
+	filterInterpeter: (prev: T, filter: Filter<Ops>) => boolean
+): DataBookHandler<T, Ops> {
+	return ({pageNumber, pageSize, filters}) => {
+		var pool = all;
+		for(const filter of filters) {
+			pool = pool.filter(value => filterInterpeter(value, filter));
+		}
+		return Promise.resolve({
+			page: pool.slice(Math.max(0, pageNumber * pageSize), Math.min(pool.length, (pageNumber + 1) * pageSize)),
+			pageLimit: pool.length / pageSize
+		});
+	};
 }
 
 export function useMockDataBook<T, Ops extends string>(

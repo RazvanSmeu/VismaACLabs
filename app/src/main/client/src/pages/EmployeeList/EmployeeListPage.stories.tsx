@@ -1,7 +1,7 @@
 import {Employee} from "../../types/Employee";
 import faker from "faker";
 import {EmployeeListFilterOperation, EmployeeListPage} from "./EmployeeListPage";
-import { useMockDataBook } from "../../utils/useDataBook";
+import {useDataBook, useMockDataBook, useMockDataBookHandler} from "../../utils/useDataBook";
 import { evolveBookControls } from "../../utils/DataBook";
 import { Filter } from "../../utils/Filter";
 
@@ -24,14 +24,18 @@ export const TEST_EMPLOYEE_DATA: Employee[] = Array.from(Array(500).keys()).map(
 function mockFilterInterpreter(employee: Employee, filter: Filter<EmployeeListFilterOperation>) {
     switch(filter.operation) {
         case EmployeeListFilterOperation.ByName:
-            return employee.firstName.includes(filter.parameters[0])
+            return employee.firstName.includes(filter.parameters[0]);
         case EmployeeListFilterOperation.BirthdateBefore:
-            return employee.birthdate.valueOf() < new Date(filter.parameters[0]).valueOf()
+            return employee.birthdate.valueOf() < new Date(filter.parameters[0]).valueOf();
     }
 }
  
- 
 export function Normal() {
-    const employeesBook = evolveBookControls(useMockDataBook(TEST_EMPLOYEE_DATA, mockFilterInterpreter));
+    const employeesBook =
+        evolveBookControls(
+            useDataBook(
+                useMockDataBookHandler(TEST_EMPLOYEE_DATA, mockFilterInterpreter)
+            )
+        );
     return <EmployeeListPage employeesBook={employeesBook}/>
 }

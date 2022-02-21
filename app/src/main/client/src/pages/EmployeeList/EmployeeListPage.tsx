@@ -27,7 +27,7 @@ export function EmployeeListPage({employeesBook}: EmployeeListPageProps) {
 }
 
 export function EmployeeListPageRoute() {
-	const employeesBook = useDataBook<Employee, EmployeeListFilterOperation>(12, 0, async (req) => {
+	const employeesBook = useDataBook<Employee, EmployeeListFilterOperation>(async (req) => {
 		return {
 			pageLimit: 2,
 			page: []
