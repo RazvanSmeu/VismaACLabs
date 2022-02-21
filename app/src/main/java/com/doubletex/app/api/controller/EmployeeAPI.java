@@ -2,6 +2,8 @@ package com.doubletex.app.api.controller;
 
 import com.doubletex.app.model.Employee;
 import com.doubletex.app.api.service.employee.EmployeeService;
+import com.doubletex.app.util.DataBookRequest;
+import com.doubletex.app.util.DataBookResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +55,10 @@ public class EmployeeAPI {
     @DeleteMapping("/{id}")
     public Boolean delete(@PathVariable Long id) {
         return employeeService.delete(id);
+    }
+
+    @PostMapping("/dataBookQuery")
+    public DataBookResponse<Employee> search(@RequestBody DataBookRequest<EmployeeService.FilterOperation> request) {
+        return employeeService.dataBookQuery(request);
     }
 }

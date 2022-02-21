@@ -1,6 +1,10 @@
 package com.doubletex.app.api.service.employee;
 
 import com.doubletex.app.model.Employee;
+import com.doubletex.app.util.DataBookRequest;
+import com.doubletex.app.util.DataBookResponse;
+import com.doubletex.app.util.RemoteScribe;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -9,11 +13,15 @@ import java.util.List;
  * @date 15.02.2022
  */
 
-public interface EmployeeService {
+public interface EmployeeService extends RemoteScribe<Employee, EmployeeService.FilterOperation> {
+    enum FilterOperation {
+        ByName,
+        BirthdateBefore
+    }
+
     Employee getById(Long id);
     List<Employee> findAll(int limit);
     Boolean delete(Long id);
     Employee create(Employee employee);
     Employee update(Employee employee);
-
 }

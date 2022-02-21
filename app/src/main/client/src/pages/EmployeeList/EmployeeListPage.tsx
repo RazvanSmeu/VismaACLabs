@@ -3,9 +3,10 @@ import "./EmployeeListPage.css";
 import { EmployeeTable } from "./EmployeeTable";
 import { Employee } from "../../types/Employee";
 import {DataBook} from "../../utils/DataBook";
-import {TEST_EMPLOYEE_DATA} from "./EmployeeListPage.stories";
 import { Filtered } from "../../utils/Filter";
-import { useDataBook, useMockDataBook } from "../../utils/useDataBook";
+import { useDataBook } from "../../utils/useDataBook";
+import { NetworkScribe } from "../../utils/Scribe";
+import { useEmployeeList } from "./useEmployeeList";
 
 
 export enum EmployeeListFilterOperation {
@@ -27,11 +28,5 @@ export function EmployeeListPage({employeesBook}: EmployeeListPageProps) {
 }
 
 export function EmployeeListPageRoute() {
-	const employeesBook = useDataBook<Employee, EmployeeListFilterOperation>(async (req) => {
-		return {
-			pageLimit: 2,
-			page: []
-		};
-	})
-	return <EmployeeListPage employeesBook={employeesBook}/>;
+	return <EmployeeListPage {...useEmployeeList()}/>;
 }

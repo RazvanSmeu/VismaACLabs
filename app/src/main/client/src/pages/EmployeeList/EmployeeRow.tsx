@@ -21,12 +21,12 @@ export function EmployeeRow(props: EmployeeRowProps) {
 	return (
 		<TableRow key={props.employee.id}>
 			<TableCell>{props.employee.firstName + " " + props.employee.lastName}</TableCell>
-			<TableCell>{props.employee.telephone}</TableCell>
+			<TableCell>{props.employee.phoneNumber}</TableCell>
 			<TableCell>{props.employee.email}</TableCell>
 			<TableCell>{props.employee.jobTitle}</TableCell>
 			<TableCell>{props.employee.monthlySalary}$</TableCell>
 			<TableCell>{renderQuota(props.employee.monthlyHourQuota)}</TableCell>
-			<TableCell>{props.employee.birthdate.toISOString().split('T')[0]}</TableCell>
+			<TableCell>{props.employee.birthdate.split('T')[0]}</TableCell>
 		</TableRow>
 	);
 }
