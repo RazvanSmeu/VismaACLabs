@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.With;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author Alexandru Enache
@@ -16,7 +13,8 @@ import javax.persistence.Id;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntityModel {
+@MappedSuperclass
+public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
