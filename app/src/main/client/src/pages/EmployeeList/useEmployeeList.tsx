@@ -11,7 +11,7 @@ export const TEST_EMPLOYEE_DATA: Employee[] = Array.from(Array(500).keys()).map(
 	firstName: faker.name.firstName(),
 	lastName: faker.name.lastName(),
 	jobTitle: faker.name.jobTitle().split(' ')[2],
-	birthdate: faker.date.past(70),
+	birthdate: faker.date.past(70).toString(),
 	monthlySalary: faker.datatype.number(20) * 250 + 1000,
 	monthlyHourQuota: faker.datatype.number(10) * 4 + 20,
 	phoneNumber: faker.phone.phoneNumberFormat(1),
@@ -29,7 +29,7 @@ function mockFilterInterpreter(employee: Employee, filter: Filter<EmployeeListFi
 
 export function useEmployeeList(): EmployeeListPageProps {
 	const scribe = NetworkScribe<Employee, EmployeeListFilterOperation>('/api/employee/dataBookQuery');
-	const dataBook = useDataBook(scribe)
+	const dataBook = useDataBook(scribe, 2)
 	return {
 		employeesBook: evolveBookControls(dataBook)
 	};

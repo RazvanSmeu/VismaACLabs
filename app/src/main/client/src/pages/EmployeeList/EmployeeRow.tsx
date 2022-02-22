@@ -26,7 +26,7 @@ export function EmployeeRow(props: EmployeeRowProps) {
 			<TableCell>{props.employee.jobTitle}</TableCell>
 			<TableCell>{props.employee.monthlySalary}$</TableCell>
 			<TableCell>{renderQuota(props.employee.monthlyHourQuota)}</TableCell>
-			<TableCell>{props.employee.birthdate.split('T')[0]}</TableCell>
+			<TableCell>{props.employee.birthdate.toString()}</TableCell>
 		</TableRow>
 	);
 }
