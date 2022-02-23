@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 @Getter
 @Setter
 public class User extends BaseEntity {
-    private String latestUserToken;
+    private String latestToken;
     private String userName;
     private String passwordHash;
     private String salt;

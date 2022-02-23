@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public Optional<User> login(String userName, String password) {
-        return Optional.empty();
+        return Optional.ofNullable(userRepository.findByUserNameAndPassword(userName, password));
     }
 
     public Optional<User> login(String userToken) {
@@ -29,6 +29,17 @@ public class UserServiceImpl implements UserService {
     }
 
     public Optional<User> register(String userName, String password) {
-        return Optional.empty();
+        User optionalUser = userRepository.findByUserNameAndPassword(userName, password);
+        if(optionalUser != null) {
+            return Optional.empty();
+        } else {
+            User newUser = new User();
+            newUser.setUserName(userName);
+            newUser.setPasswordHash(password);
+            newUser.setSalt(generateToken());
+            newUser.setLatestToken(generateToken());
+            userRepository.save(newUser);
+            return Optional.of(newUser);
+        }
     }
 }
