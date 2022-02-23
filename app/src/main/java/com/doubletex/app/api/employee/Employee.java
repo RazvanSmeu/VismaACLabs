@@ -1,6 +1,6 @@
 package com.doubletex.app.api.employee;
 
-import com.doubletex.app.model.BaseEntity;
+import com.doubletex.app.util.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;

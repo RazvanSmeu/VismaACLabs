@@ -1,4 +1,4 @@
-package com.doubletex.app.model;
+package com.doubletex.app.util;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
