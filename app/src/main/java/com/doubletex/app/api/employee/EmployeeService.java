@@ -1,13 +1,10 @@
-package com.doubletex.app.api.service.employee;
+package com.doubletex.app.api.employee;
 
-import com.doubletex.app.model.Employee;
 import com.doubletex.app.util.RemoteScribe;
-
 import java.util.List;
 
 /**
  * @author Alexandru Enache
- * @date 15.02.2022
  */
 
 public interface EmployeeService extends RemoteScribe<Employee, EmployeeService.FilterOperation> {

@@ -1,7 +1,5 @@
-package com.doubletex.app.api.service.employee;
+package com.doubletex.app.api.employee;
 
-import com.doubletex.app.model.Employee;
-import com.doubletex.app.api.repository.EmployeeRepository;
 import com.doubletex.app.util.PageRequest;
 import com.doubletex.app.util.PageResponse;
 import com.doubletex.app.util.Filter;
@@ -13,7 +11,6 @@ import java.util.List;
 
 /**
  * @author Alexandru Enache
- * @date 15.02.2022
  */
 
 @Service

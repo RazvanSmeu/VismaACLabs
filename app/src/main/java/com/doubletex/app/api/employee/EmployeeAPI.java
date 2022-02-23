@@ -1,11 +1,7 @@
-package com.doubletex.app.api.controller;
+package com.doubletex.app.api.employee;
 
-import com.doubletex.app.model.Employee;
-import com.doubletex.app.api.service.employee.EmployeeService;
 import com.doubletex.app.util.PageRequest;
 import com.doubletex.app.util.PageResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +9,11 @@ import java.util.List;
 
 /**
  * @author Alexandru Enache
- * @date 15.02.2022
  */
 
 @RestController
 @RequestMapping("api/employee")
 public class EmployeeAPI {
-
-    private static final Logger LOG = LoggerFactory.getLogger(EmployeeAPI.class);
-
     private final EmployeeService employeeService;
 
     @Autowired
