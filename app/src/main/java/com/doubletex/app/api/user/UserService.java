@@ -1,9 +1,10 @@
 package com.doubletex.app.api.user;
 
+import javax.xml.bind.ValidationException;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<User> login(String userName, String password);
-    Optional<User> login(String userToken);
-    Optional<User> register(String userName, String password);
+    User login(String userName, String password);
+    User resume(String userToken);
+    User register(String userName, String password);
 }

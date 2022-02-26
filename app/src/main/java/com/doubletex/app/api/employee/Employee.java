@@ -1,5 +1,6 @@
 package com.doubletex.app.api.employee;
 
+import com.doubletex.app.api.company.Company;
 import com.doubletex.app.util.BaseEntity;
 import lombok.*;
 
@@ -20,4 +21,7 @@ public class Employee extends BaseEntity {
     private String jobTitle;
     private double monthlySalary;
     private int monthlyHourQuota;
+
+    @ManyToOne
+    private Company company;
 }

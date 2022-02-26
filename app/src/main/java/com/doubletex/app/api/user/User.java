@@ -5,6 +5,7 @@ import com.doubletex.app.util.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
@@ -13,10 +14,11 @@ import javax.persistence.OneToOne;
 @Getter
 @Setter
 public class User extends BaseEntity {
-    private String latestToken;
+    @Column(unique = true)
     private String userName;
     private String passwordHash;
     private String salt;
+    private String latestToken;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Employee employee;

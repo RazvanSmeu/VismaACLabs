@@ -34,15 +34,15 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        String userToken = request.getHeader("userToken");
-        Optional<User> userOptional = userService.login(userToken);
-        if(userOptional.isEmpty()) {
-//            response.sendError(401, "User token not found or invalid. Please log in again.");
-        } else {
-            User user = userOptional.get();
+        String userToken = request.getHeader("Authorization");
+        try {
+            userToken = userToken.substring(7);
+            User user = userService.resume(userToken);
             Employee employee = user.getEmployee();
             Credentials credentials = new Credentials(user, employee);
-            Credentials.INSTANCE.set(credentials);
+            Credentials.set(credentials);
+        } catch(SecurityException e) {
+            // Do nothing
         }
 
         filterChain.doFilter(request, response);

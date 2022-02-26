@@ -1,5 +1,8 @@
 package com.doubletex.app.api.employee;
 
+import com.doubletex.app.api.company.Company;
+import com.doubletex.app.api.company.CompanyRepository;
+import com.doubletex.app.util.Credentials;
 import com.doubletex.app.util.PageRequest;
 import com.doubletex.app.util.PageResponse;
 import com.doubletex.app.util.Filter;
@@ -17,10 +20,12 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final CompanyRepository companyRepository;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, CompanyRepository companyRepository) {
         this.employeeRepository = employeeRepository;
+        this.companyRepository = companyRepository;
     }
 
     @Override
@@ -47,6 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findAll(int limit) {
+        Company company = Credentials.getEmployee().getCompany();
         return employeeRepository.findAll(org.springframework.data.domain.PageRequest.of(0, limit)).toList();
     }
 

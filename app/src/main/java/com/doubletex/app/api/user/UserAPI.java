@@ -17,18 +17,26 @@ public class UserAPI {
         this.userService = userService;
     }
 
-    @GetMapping()
+    @GetMapping("/login")
     @ResponseBody
-    public Optional<User> login(
+    public User login(
         @RequestParam String userName,
         @RequestParam String password
     ) {
         return userService.login(userName, password);
     }
 
-    @PutMapping()
+    @GetMapping("/resume")
     @ResponseBody
-    public Optional<User> register(
+    public User resume(
+            @RequestParam String userToken
+    ) {
+        return userService.resume(userToken);
+    }
+
+    @PutMapping("/register")
+    @ResponseBody
+    public User register(
             @RequestParam String userName,
             @RequestParam String password
     ) {
