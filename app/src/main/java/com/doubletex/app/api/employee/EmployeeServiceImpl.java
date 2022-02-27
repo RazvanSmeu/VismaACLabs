@@ -67,7 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Page<Employee> page = employeeRepository.search(name, org.springframework.data.domain.PageRequest.of(request.getPageNumber(), request.getPageSize()));
 
         PageResponse<Employee> response = new PageResponse<>();
-        response.setPage(page.getContent().toArray(new Employee[0]));
+        response.setPage(page.getContent());
         response.setPageLimit(page.getTotalPages());
 
         return response;

@@ -19,7 +19,14 @@ public class User extends BaseEntity {
     private String passwordHash;
     private String salt;
     private String latestToken;
+    private boolean isTokenFrozen;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private Employee employee;
+
+    public void setLatestToken(String latestToken) {
+        if(!this.isTokenFrozen) {
+            this.latestToken = latestToken;
+        }
+    }
 }

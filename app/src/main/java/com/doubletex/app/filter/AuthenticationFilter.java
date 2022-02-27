@@ -28,23 +28,25 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     private final static Logger LOG = LoggerFactory.getLogger(com.doubletex.app.filter.DoubletexFilter.class);
 
+    private void setupCredentials(String authToken) {
+        try {
+            authToken = authToken.substring(7);
+            User user = userService.resume(authToken);
+            Employee employee = user.getEmployee();
+            Credentials credentials = new Credentials(user, employee);
+            Credentials.set(credentials);
+        } catch(SecurityException | NullPointerException e) {
+            // Do nothing
+        }
+    }
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        String userToken = request.getHeader("Authorization");
-        try {
-            userToken = userToken.substring(7);
-            User user = userService.resume(userToken);
-            Employee employee = user.getEmployee();
-            Credentials credentials = new Credentials(user, employee);
-            Credentials.set(credentials);
-        } catch(SecurityException e) {
-            // Do nothing
-        }
-
+        setupCredentials(request.getHeader("Authorization"));
         filterChain.doFilter(request, response);
     }
 }

@@ -42,4 +42,23 @@ public class UserAPI {
     ) {
         return userService.register(userName, password);
     }
+
+    @GetMapping("/freezeToken")
+    @ResponseBody
+    public User freezeToken(
+        @RequestParam String userName,
+        @RequestParam String password
+    ) {
+        return userService.freezeToken(userName, password);
+    }
+
+    @GetMapping("/meltToken")
+    @ResponseBody
+    public User meltToken(
+        @RequestParam String userName,
+        @RequestParam String password,
+        @RequestParam String userToken
+    ) {
+        return userService.meltToken(userName, password, userToken);
+    }
 }

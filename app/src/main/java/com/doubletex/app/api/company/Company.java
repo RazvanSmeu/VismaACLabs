@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Company extends BaseEntity {
     private String name;
+    private long ownerId;
 
     @OneToMany
     private List<Employee> employees;
