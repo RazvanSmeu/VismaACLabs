@@ -1,0 +1,18 @@
+root, input, button, * {
+	--main-hue: 250;
+	--main-sat: 36%;
+	--main-lit: 32%;
+	--main-lit-hov: 50%;
+	--main-lit-foc: 30%;
+	--main-color: hsl(var(--main-hue), var(--main-sat), var(--main-lit));
+	--main-color-hov: hsl(var(--main-hue), var(--main-sat), var(--main-lit-hov));
+	--main-color-foc: hsl(var(--main-hue), var(--main-sat), var(--main-lit-foc));
+}
+
+button.MuiButton-contained {
+	background-color: var(--main-color);
+}
+
+button.MuiButton-contained:hover {
+	background-color: var(--main-color-hov);
+}

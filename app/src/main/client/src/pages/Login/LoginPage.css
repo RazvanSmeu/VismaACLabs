@@ -1,0 +1,38 @@
+.login-page__wrapper {
+	padding: 20px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex-wrap:wrap;
+	gap: 25px;
+
+	width: 400px;
+	height: 350px;
+}
+
+.login-page__header {
+	margin-bottom: auto;
+	text-align: center;
+	font-size: 26px;
+}
+
+.login-page__footer {
+	margin-top: auto;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+}
+
+.login-page__footer button {
+	height: 50px;
+	padding: 0 40px;
+	flex: 1;
+	background-color: var(--main-color);
+}
+
+.login-page__footer button:hover {
+	background-color: var(--main-color-hov);
+}
