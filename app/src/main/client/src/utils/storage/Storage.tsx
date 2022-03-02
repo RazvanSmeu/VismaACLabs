@@ -1,3 +1,4 @@
+import { Subject } from "../Subject";
 import { useStorage } from "./useStorage"
 
 export enum Persistance {
@@ -6,17 +7,11 @@ export enum Persistance {
 	Cookie
 }
 
-export type Storage<T> = {
-	readonly contents: T,
-	setContents(newContents: T): void
-	clear(): void
-}
-
 export type StorageSpec<T> = {
 	readonly label: string,
 	readonly type: Persistance,
 	readonly defaultValue: T,
-	use(): Storage<T>
+	useSpec(): Subject<T>
 }
 
 export function StorageSpec<T>(type: Persistance, label: string, defaultValue: T): StorageSpec<T> {
@@ -24,10 +19,10 @@ export function StorageSpec<T>(type: Persistance, label: string, defaultValue: T
 		label,
 		type,
 		defaultValue,
-		use
+		useSpec
 	}
 	
-	function use(): Storage<T> {
+	function useSpec(): Subject<T> {
 		return useStorage(spec);
 	}
 	return spec;

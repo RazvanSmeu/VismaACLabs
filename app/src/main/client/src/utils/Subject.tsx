@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { Valid, Validation } from "./Validated";
+import { Invalid, Valid, Validation } from "./Validated";
 
 export type Subject<T> = {
 	readonly value: T;
@@ -23,4 +23,15 @@ export function useSubject<T>(defaultValue: T, validate?: (value: T) => Validati
 		reset,
 		validation
 	}
+}
+
+export function useUnstableSubject<T>(validate?: (value: T) => Validation): Subject<T | undefined> {
+	function newValidate(value: T | undefined): Validation {
+		if(value === undefined) {
+			return Invalid.because("Value is undefined");
+		} else {
+			return validate === undefined ? Valid : validate?.(value);
+		}
+	}
+	return useSubject<T | undefined>(undefined, newValidate);
 }

@@ -56,9 +56,8 @@ public class UserAPI {
     @ResponseBody
     public User meltToken(
         @RequestParam String userName,
-        @RequestParam String password,
-        @RequestParam String userToken
+        @RequestParam String password
     ) {
-        return userService.meltToken(userName, password, userToken);
+        return userService.meltToken(userName, password);
     }
 }

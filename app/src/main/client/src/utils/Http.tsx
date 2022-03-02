@@ -24,9 +24,9 @@ export class Endpoint<In, Out> {
 export const Http = {
 	async request<T>(url: string, info: RequestInit & {rawBody: any}): Promise<T> {
 		let params = null as any as URLSearchParams;
-		if(info.method === "GET") {
+		// if(info.method === "GET") {
 			params = new URLSearchParams();
-		}
+		// }
 		if(info.rawBody) {
 			for(const [key, value] of Object.entries(info.rawBody)) {
 				if(params !== null) {
@@ -43,6 +43,15 @@ export const Http = {
 		}
 		const response = await fetch(url, info);
 		const object   = await response.json();
+
+		if(!response.ok) {
+			if(object.message) {
+				throw object.message;
+			} else {
+				throw object;
+			}
+		}
+
 		return object;
 	}
 }

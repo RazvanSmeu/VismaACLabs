@@ -5,6 +5,11 @@
 	height: 100%;
 	width: 100%;
 	background-color: #0005;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000000;
 }
 
 .error-popup__panel {
@@ -12,10 +17,10 @@
 	max-width: 300px;
 	max-height: 200px;
 	min-height: 200px;
-	position: fixed;
+	/* position: fixed;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%); */
 
 	display: flex;
 	flex-direction: column;
@@ -27,4 +32,32 @@
 .error-popup__panel > * {
 	margin-top: auto;
 	text-align: center;
+}
+
+.error-popup__panel {
+	animation: slideIn 0.2s;
+}
+
+.error-popup__backdrop {
+	animation: fadeIn 0.2s;
+}
+
+
+@keyframes slideIn {
+	from {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }

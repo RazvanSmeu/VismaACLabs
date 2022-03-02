@@ -5,8 +5,13 @@ import { Route } from 'react-router-dom';
 import { DoubleTextContentPane } from '../../components/DoubleTexContentPane';
 import { EmployeeDetailsPage } from '../EmployeeDetails/EmployeeDetailsPage';
 import { EmployeeListPageRoute } from '../EmployeeList/EmployeeListPage';
+import { User } from '../../types/User';
 
-export default function AppFrame() {
+export type AppFrameProps = {
+	user: User
+}
+
+export default function AppFrame(props: AppFrameProps) {
   return (
     <div className="App">
 					<CssBaseline enableColorScheme={false}/>

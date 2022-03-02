@@ -5,7 +5,7 @@ import {Button, Toolbar, Typography} from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import { Box } from "@mui/system";
-import {AccountBox, Inventory, Work} from "@mui/icons-material";
+import {AccountBox, Inventory, Logout, Work} from "@mui/icons-material";
 
 function redirect(path: string) {
 	return () => window.location.href = path;
@@ -30,7 +30,10 @@ export function DoubleTexAppBar() {
 				<Button startIcon={<Inventory />} disableElevation variant="contained" onClick={redirect("/inventory")}>Inventory</Button>
 				<Button startIcon={<Work />} disableElevation variant="contained" onClick={redirect("/company")}>Company</Button>
 				<Box width={30} />
-				<Button startIcon={<AccountBox />} disableElevation variant="contained" onClick={redirect("/account")}>Account</Button>
+				<Button startIcon={<Logout />} disableElevation variant="contained" onClick={() => {
+					localStorage.removeItem("doubletex-app-user");
+					window.dispatchEvent(new Event("storage"));
+				}}>Logout</Button>
 			</Toolbar>
 		</AppBar>
 	);

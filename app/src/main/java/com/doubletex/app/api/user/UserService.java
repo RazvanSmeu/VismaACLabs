@@ -8,5 +8,5 @@ public interface UserService {
     User resume(String userToken);
     User register(String userName, String password);
     User freezeToken(String userName, String password);
-    User meltToken(String userName, String password, String userToken);
+    User meltToken(String userName, String password);
 }

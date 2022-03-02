@@ -108,13 +108,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User meltToken(String userName, String password, String userToken) {
+    public User meltToken(String userName, String password) {
         User user = resolveUser(userName, password);
         if(!user.isTokenFrozen()) {
             throw new UserException("User token is not frozen");
-        }
-        if(!Objects.equals(user.getLatestToken(), userToken)) {
-            throw new UserException("User token provided ");
         }
         user.setTokenFrozen(false);
         user.setLatestToken(generateToken());
