@@ -1,47 +1,62 @@
-import { LoginRequest, User, USER_LOGIN, USER_REGISTER, USER_SESSION } from "../../types/User";
-import { Subject, useSubject, useUnstableSubject } from "../../utils/Subject";
+import { LoginRequest, USER_LOGIN, USER_REGISTER, USER_SESSION } from "../../types/User";
+import { useSubject } from "../../utils/Subject";
 import { Invalid, Valid } from "../../utils/Validated";
 import { LoginPageProps } from "./LoginPage";
 
 export function useLoginPage(): LoginPageProps {
-	const serverValidation = useSubject(Valid);
+	const userName = useSubject("");
+	const password = useSubject("");
+	const responseValidation = useSubject(Valid);
 	const userSubject = USER_SESSION.useSpec();
 
-	async function doLogin(request: LoginRequest) {
-		try {
-			const user = await USER_LOGIN.call(request);
-			userSubject.set(user);
-		} catch(e) {
-			serverValidation.set(Invalid.because("" + e));
+	function makeRequest(): LoginRequest {
+		return {
+			userName: userName.value,
+			password: password.value
 		}
 	}
 
-	async function doRegister(request: LoginRequest) {
+	async function doLogin() {
 		try {
-			const user = await USER_REGISTER.call(request);
+			const user = await USER_LOGIN.call(makeRequest());
 			userSubject.set(user);
 		} catch(e) {
-			serverValidation.set(Invalid.because("" + e));
+			responseValidation.set(Invalid.because("" + e));
+		}
+	}
+
+	async function doRegister() {
+		try {
+			const user = await USER_REGISTER.call(makeRequest());
+			userSubject.set(user);
+		} catch(e) {
+			responseValidation.set(Invalid.because("" + e));
 		}
 	}
 
 	return {
+		userName,
+		password,
 		doLogin,
 		doRegister,
-		totalValidation: serverValidation
+		responseValidation
 	};
 }
 
 export function useTestLoginPage(): LoginPageProps {
-	const totalValidation = useSubject(Valid);
+	const userName = useSubject("");
+	const password = useSubject("");
+	const responseValidation = useSubject(Valid);
 
 	function doLogin() {
-		totalValidation.set(Invalid.because("Login failed, this is a test environment, you stupid lil cunt."));
+		responseValidation.set(Invalid.because("Login failed, this is a test environment, you stupid lil cunt."));
 	}
 
 	return {
+		userName,
+		password,
 		doLogin,
 		doRegister() {},
-		totalValidation
+		responseValidation
 	};
 }

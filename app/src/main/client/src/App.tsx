@@ -4,8 +4,7 @@ import './dbx-globals.css';
 import AppFrame from './pages/AppFrame/AppFrame';
 import { LoginPage } from './pages/Login/LoginPage';
 import { useLoginPage } from './pages/Login/useLoginPage';
-import { User, USER_SESSION } from './types/User';
-import { useUnstableSubject } from './utils/Subject';
+import { USER_SESSION } from './types/User';
 
 function App() {
 	const userSubject = USER_SESSION.useSpec();
@@ -13,7 +12,7 @@ function App() {
 
 	if(userSubject.value !== undefined) {
 		return (
-			<AppFrame user={userSubject.value}/>
+			<AppFrame/>
 		);
 	} else {
 		return (

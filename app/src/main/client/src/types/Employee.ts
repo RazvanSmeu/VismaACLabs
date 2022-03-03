@@ -1,5 +1,5 @@
-import { CrudMethod, Endpoint } from "../utils/Http";
-import { Identifiable } from "./Identifiable";
+import {CrudMethod, Endpoint, ParamLocation} from "../utils/Http";
+import {Identifiable} from "./Identifiable";
 
 export type Employee = Identifiable & {
 	firstName: string;
@@ -12,5 +12,13 @@ export type Employee = Identifiable & {
 	phoneNumber: string;
 }
 
-export const GET_EMPLOYEE = new Endpoint<number, Employee>(CrudMethod.GET, '/api/employee/{id}');
-export const SET_EMPLOYEE = new Endpoint<Employee, void>(CrudMethod.PUT, '/api/employee');
+export const GET_EMPLOYEE = Endpoint<number, Employee>(
+	CrudMethod.GET,
+	'/api/employee/{id}',
+	ParamLocation.Id
+);
+export const SET_EMPLOYEE = Endpoint<Employee, void>(
+	CrudMethod.PUT,
+	'/api/employee',
+	ParamLocation.InBody
+);

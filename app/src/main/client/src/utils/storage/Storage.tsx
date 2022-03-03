@@ -3,8 +3,7 @@ import { useStorage } from "./useStorage"
 
 export enum Persistance {
 	Local,
-	Session,
-	Cookie
+	Session
 }
 
 export type StorageSpec<T> = {

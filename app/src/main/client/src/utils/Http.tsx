@@ -7,39 +7,80 @@ export enum CrudMethod {
 	DELETE = "DELETE"
 }
 
-export class Endpoint<In, Out> {
-	public constructor(readonly method: CrudMethod, readonly url: string) {}
+export enum ParamLocation {
+	InUrl,
+	InQuery,
+	InBody,
+	Id
+}
 
-	async call(
+export type Endpoint<In, Out> = {
+	readonly method: CrudMethod;
+	readonly url: string;
+	readonly paramLocations: ParamLocation[]
+	call(
 		input: In,
-		facilitator: (url: string, body: RequestInit & {rawBody: In}) => Promise<Out> = Http.request
-	): Promise<Out> {
-		return facilitator(this.url, {
-			method: this.method,
-			rawBody: input,
-		});
+		facilitator: (url: string, body: RequestInit & {rawBody: In}) => Promise<Out>
+	): Promise<Out>
+}
+
+export function Endpoint<In, Out>(
+	method: CrudMethod,
+	url: string,
+	...paramLocations: ParamLocation[]
+): Endpoint<In, Out> {
+	if(paramLocations === []) {
+		paramLocations = [ParamLocation.Id];
+	}
+	return {
+		method,
+		url,
+		paramLocations,
+		async call(
+			input: In,
+			facilitator: (url: string, body: RequestInit & {rawBody: In}) => Promise<Out>
+		): Promise<Out> {
+			return facilitator(url, {
+				method: method,
+				rawBody: input,
+			});
+		}
 	}
 }
 
 export const Http = {
-	async request<T>(url: string, info: RequestInit & {rawBody: any}): Promise<T> {
+	async request<T>(
+		url: string,
+		body: any,
+		paramLocations: ParamLocation[],
+		info: RequestInit
+	): Promise<T> {
 		let params = null as any as URLSearchParams;
-		// if(info.method === "GET") {
+		if(paramLocations.includes(ParamLocation.InQuery)) {
 			params = new URLSearchParams();
-		// }
-		if(info.rawBody) {
-			for(const [key, value] of Object.entries(info.rawBody)) {
+		}
+		if(body) {
+			for(const [key, value] of Object.entries(body)) {
 				if(params !== null) {
-					params.set(key, "" + value);
-					url.replace(`${key}`, "" + value);
+					if(paramLocations.includes(ParamLocation.InQuery)) {
+						params.set(key, "" + value);
+					}
+					if(paramLocations.includes(ParamLocation.InUrl)) {
+						url.replace(`${key}`, "" + value);
+					}
 				}
 			}
 		}
 		if(params !== null) {
 			url += "?" + params.toString();
-			if(typeof info.rawBody === "number") {
-				url = url.replace("{id}", "" + info.rawBody);
+			if(paramLocations.includes(ParamLocation.Id)) {
+				if(typeof body === "number") {
+					url = url.replace("{id}", "" + body);
+				}
 			}
+		}
+		if(paramLocations.includes(ParamLocation.InBody)) {
+			info.body = JSON.stringify(body);
 		}
 		const response = await fetch(url, info);
 		const object   = await response.json();

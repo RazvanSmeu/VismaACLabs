@@ -8,49 +8,28 @@ import { Invalid, Valid, Validation } from "../../utils/Validated";
 import './LoginPanel.css';
 import { LoginRequest } from "../../types/User";
 
-function validateUserName(userName: string): Validation {
-	if(userName.length == 0) {
-		return Valid;
-	}
-	if(userName.length < 3) {
-		return Invalid.because("Need at least 4 characters");
-	}
-	return Valid;
-}
-
-function validatePassword(password: string): Validation {
-	if(password.length == 0) {
-		return Valid;
-	}
-	if(password.length < 3) {
-		return Invalid.because("Need at least 4 characters");
-	}
-	return Valid;
-}
-
 export type LoginPanelProps = {
-	doLogin(request: LoginRequest): void,
-	doRegister(request: LoginRequest): void,
-	totalValidation: Subject<Validation>
+	userName: Subject<string>,
+	password: Subject<string>,
+	responseValidation: Subject<Validation>
+	doLogin(): void,
+	doRegister(): void,
 }
 
 export function LoginPanel(props: LoginPanelProps) {
-	const userName = useSubject("", validateUserName);
-	const password = useSubject("", validatePassword);
-
 	const canContinue = (
-		userName.validation == Valid &&
-		userName.value != "" &&
-		password.validation == Valid &&
-		password.value != ""
+		props.userName.validation == Valid &&
+		props.userName.value != "" &&
+		props.password.validation == Valid &&
+		props.password.value != ""
 	)
 
 	return (
 		<>
-			{props.totalValidation.value.isInvalid && (
+			{props.responseValidation.value.isInvalid && (
 				<ErrorPopup
-					message={props.totalValidation.value.message}
-					close={() => props.totalValidation.set(Valid)}
+					message={props.responseValidation.value.message}
+					close={() => props.responseValidation.set(Valid)}
 				/>
 			)}
 			<DbxPanel className="login-panel__wrapper">
@@ -60,33 +39,27 @@ export function LoginPanel(props: LoginPanelProps) {
 					label="Username"
 					type="text"
 					autoComplete="username"
-					subject={userName}
+					subject={props.userName}
 				/>
 				<DbxInput
 					id="outlined-password-input"
 					label="Password"
 					type="password"
 					autoComplete="password"
-					subject={password}
+					subject={props.password}
 				/>
 				<div className="login-panel__footer">
 					<Button
 						variant="contained"
 						disabled={!canContinue}
-						onClick={() => props.doLogin({
-							userName: userName.value,
-							password: password.value
-						})}
+						onClick={props.doLogin}
 					>
 						Login
 					</Button>
 					<Button
 						variant="contained"
 						disabled={!canContinue}
-						onClick={() => props.doRegister({
-							userName: userName.value,
-							password: password.value
-						})}
+						onClick={props.doRegister}
 					>
 						Register
 					</Button>

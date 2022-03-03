@@ -7,11 +7,7 @@ import { EmployeeDetailsPage } from '../EmployeeDetails/EmployeeDetailsPage';
 import { EmployeeListPageRoute } from '../EmployeeList/EmployeeListPage';
 import { User } from '../../types/User';
 
-export type AppFrameProps = {
-	user: User
-}
-
-export default function AppFrame(props: AppFrameProps) {
+export default function AppFrame() {
   return (
     <div className="App">
 					<CssBaseline enableColorScheme={false}/>
