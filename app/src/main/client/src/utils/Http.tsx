@@ -20,7 +20,7 @@ export type Endpoint<In, Out> = {
 	readonly paramLocations: ParamLocation[]
 	call(
 		input: In,
-		facilitator: (url: string, body: RequestInit & {rawBody: In}) => Promise<Out>
+		facilitator?: (url: string, body: RequestInit & {rawBody: In}) => Promise<Out>
 	): Promise<Out>
 }
 
@@ -38,12 +38,19 @@ export function Endpoint<In, Out>(
 		paramLocations,
 		async call(
 			input: In,
-			facilitator: (url: string, body: RequestInit & {rawBody: In}) => Promise<Out>
+			facilitator: (
+				url: string,
+				body: any,
+				paramLocations: ParamLocation[],
+				info: RequestInit
+			) => Promise<Out> = Http.request
 		): Promise<Out> {
-			return facilitator(url, {
-				method: method,
-				rawBody: input,
-			});
+			return facilitator(
+				url,
+				input,
+				paramLocations,
+				{ method }
+			);
 		}
 	}
 }

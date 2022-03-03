@@ -2,8 +2,8 @@ root, input, button, * {
 	--main-hue: 250;
 	--main-sat: 36%;
 	--main-lit: 32%;
-	--main-lit-hov: 50%;
-	--main-lit-foc: 30%;
+	--main-lit-hov: 40%;
+	--main-lit-foc: 26%;
 	--main-color: hsl(var(--main-hue), var(--main-sat), var(--main-lit));
 	--main-color-hov: hsl(var(--main-hue), var(--main-sat), var(--main-lit-hov));
 	--main-color-foc: hsl(var(--main-hue), var(--main-sat), var(--main-lit-foc));

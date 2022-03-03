@@ -10,14 +10,14 @@ export function useStorage<T>(spec: StorageSpec<T>): Subject<T> {
 
 	switch(spec.type) {
 		case Persistance.Local:
-			get = localStorage.getItem;
-			set = localStorage.setItem;
-			remove = localStorage.removeItem;
+			get = (key) => localStorage.getItem(key);
+			set = (k, v) => localStorage.setItem(k, v);
+			remove = (k) => localStorage.removeItem(k);
 			break;
 		case Persistance.Session:
-			get = sessionStorage.getItem;
-			set = sessionStorage.setItem;
-			remove = sessionStorage.removeItem;
+			get = (key) => sessionStorage.getItem(key);
+			set = (k, v) => sessionStorage.setItem(k, v);
+			remove = (k) => sessionStorage.removeItem(k);
 			break;
 	}
 
