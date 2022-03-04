@@ -1,8 +1,6 @@
 package com.doubletex.app.util;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.With;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +9,8 @@ import javax.persistence.*;
  * @date 21.02.2022
  */
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
@@ -21,12 +21,5 @@ public class BaseEntity {
     @Column(nullable = false, updatable = false)
     @With
     private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private boolean isInitialized;
 }

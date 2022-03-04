@@ -2,6 +2,8 @@ package com.doubletex.app.api.user;
 
 import com.doubletex.app.api.employee.Employee;
 import com.doubletex.app.util.BaseEntity;
+import com.doubletex.app.util.IdProxySerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +23,8 @@ public class User extends BaseEntity {
     private String latestToken;
     private boolean isTokenFrozen;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonSerialize(using = IdProxySerializer.class)
     private Employee employee;
 
     public void setLatestToken(String latestToken) {

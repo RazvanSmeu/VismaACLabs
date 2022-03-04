@@ -31,7 +31,7 @@ export function DoubleTexAppBar() {
 				<Button startIcon={<Work />} disableElevation variant="contained" onClick={redirect("/company")}>Company</Button>
 				<Box width={30} />
 				<Button startIcon={<Logout />} disableElevation variant="contained" onClick={() => {
-					localStorage.removeItem("doubletex-app-user");
+					sessionStorage.removeItem("doubletex-app-user");
 					window.dispatchEvent(new Event("storage"));
 				}}>Logout</Button>
 			</Toolbar>
