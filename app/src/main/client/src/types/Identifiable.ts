@@ -1,3 +1,3 @@
 export type Identifiable = {
-	id: number;
+  id: number
 }

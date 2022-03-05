@@ -1,14 +1,14 @@
-import React from "react";
-import "./DoubleTexAppBar.css";
-import AppBar from '@mui/material/AppBar';
-import {Button, Toolbar, Typography} from "@mui/material";
-import GroupIcon from "@mui/icons-material/Group";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import { Box } from "@mui/system";
-import {AccountBox, Inventory, Logout, Work} from "@mui/icons-material";
+import React from 'react'
+import './DoubleTexAppBar.css'
+import AppBar from '@mui/material/AppBar'
+import { Button, Toolbar, Typography } from '@mui/material'
+import GroupIcon from '@mui/icons-material/Group'
+import LocalOfferIcon from '@mui/icons-material/LocalOffer'
+import { Box } from '@mui/system'
+import { AccountBox, Inventory, Logout, Work } from '@mui/icons-material'
 
 function redirect(path: string) {
-	return () => window.location.href = path;
+  return () => (window.location.href = path)
 }
 
 export function DoubleTexAppBar() {

@@ -1,33 +1,34 @@
 th.MuiTableCell-head {
-	font-weight: 900;
-	font-size: 16px;
+  font-weight: 900;
+  font-size: 16px;
 }
 
-table.MuiTable-root *{
-	font-size: 16px;
+table.MuiTable-root * {
+  font-size: 16px;
 }
 
 .employeeTable {
-	background-color: white;
-	min-height: 800px;
-	border: 1px solid teal !important;
-	border-radius: 4px;
-	overflow-x: none;
+  background-color: white;
+  min-height: 800px;
+  border: 1px solid teal !important;
+  border-radius: 4px;
+  /*overflow-x: none;*/
 }
 
 .employeeTable tbody {
-	overflow-x: auto;
+  overflow-x: auto;
 }
 
 .employeeTable thead {
-	background-color: #f2f5ff;
+  background-color: #f2f5ff;
 }
 
-.employeeTable td:nth-child(1), td:nth-child(3) {
-	color: #0000BB;
+.employeeTable td:nth-child(1),
+td:nth-child(3) {
+  color: #0000bb;
 }
 
 .employeeTable td:nth-child(5) {
-	color: green;
-	font-weight: 500;
+  color: green;
+  font-weight: 500;
 }

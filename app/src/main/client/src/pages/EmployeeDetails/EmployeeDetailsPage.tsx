@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react'
 
 export function EmployeeDetailsPage() {
-	return <div>Employee details</div>;
+  return <div>Employee details</div>
 }

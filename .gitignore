@@ -25,3 +25,4 @@ hs_err_pid*
 .DS_STORE
 
 node_modules
+app/src/main/client/storybook-static

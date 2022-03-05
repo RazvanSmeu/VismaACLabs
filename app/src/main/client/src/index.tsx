@@ -1,28 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import {createTheme, ThemeProvider} from "@mui/material";
-import {purple} from "@mui/material/colors";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import { createTheme, ThemeProvider } from '@mui/material'
+import { purple } from '@mui/material/colors'
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={createTheme({
+    <ThemeProvider
+      theme={createTheme({
         palette: {
-            primary: {
-                main: purple[700]
-            }
+          primary: {
+            main: purple[700]
+          }
         },
         typography: {
-            fontFamily: [
-                'Ubuntu'
-            ].join(","),
-            fontWeightBold: 700,
-            fontSize: 16
+          fontFamily: ['Ubuntu'].join(','),
+          fontWeightBold: 700,
+          fontSize: 16
         }
-    })}>
-        <App />
+      })}>
+      <App />
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
-);
+)

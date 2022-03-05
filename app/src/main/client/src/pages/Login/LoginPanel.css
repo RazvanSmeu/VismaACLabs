@@ -1,52 +1,52 @@
 .login-panel__wrapper {
-	padding: 20px;
+  padding: 20px;
 
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	flex-wrap:wrap;
-	gap: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
 
-	width: 400px;
-	height: 350px;
+  width: 400px;
+  height: 350px;
 }
 
 .login-panel__header {
-	margin-bottom: auto;
-	text-align: center;
-	font-size: 26px;
+  margin-bottom: auto;
+  text-align: center;
+  font-size: 26px;
 }
 
 .login-panel__footer {
-	margin-top: auto;
+  margin-top: auto;
 
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 
 .login-panel__footer button {
-	height: 50px;
-	padding: 0 40px;
-	flex: 1;
-	background-color: var(--main-color);
+  height: 50px;
+  padding: 0 40px;
+  flex: 1;
+  background-color: var(--main-color);
 }
 
 .login-panel__footer button:hover {
-	background-color: var(--main-color-hov);
+  background-color: var(--main-color-hov);
 }
 
 .login-panel__wrapper {
-	animation: slideIn 1s;
+  animation: slideIn 1s;
 }
 
 @keyframes slideIn {
-	from {
-		transform: translateX(-100%);
-		opacity: 0;
-	}
-	to {
-		opacity: 100;
-	}
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
 }

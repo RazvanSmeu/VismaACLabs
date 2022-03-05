@@ -1,13 +1,13 @@
 package com.doubletex.app.api.company;
 
 import com.doubletex.app.api.employee.Employee;
+import com.doubletex.app.api.product.Product;
 import com.doubletex.app.util.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -21,4 +21,7 @@ public class Company extends BaseEntity {
 
     @OneToMany
     private List<Employee> employees;
+
+    @OneToMany
+    private List<Product> products;
 }

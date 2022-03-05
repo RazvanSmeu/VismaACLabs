@@ -1,6 +1,6 @@
 .dbx-panel {
-	background-color: white;
-	border: 1px solid var(--main-color) !important;
-	border-radius: 4px;
-	overflow-x: none;
+  background-color: white;
+  border: 1px solid var(--main-color) !important;
+  border-radius: 4px;
+  /*overflow-x: none;*/
 }
