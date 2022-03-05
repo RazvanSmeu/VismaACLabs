@@ -12,29 +12,58 @@ function redirect(path: string) {
 }
 
 export function DoubleTexAppBar() {
-	return (
-		<AppBar position="sticky" className="DoubleTexAppBar">
-			<Toolbar>
-				<Typography
-					variant="h4"
-					noWrap
-					component="div"
-					sx={{ display: { xs: 'none', sm: 'block' }, cursor: "pointer" }}
-					onClick={redirect("/")}
-				  >
-					DoubleTex
-				</Typography>
-				<Box sx={{ flexGrow: 1 }} />
-				<Button startIcon={<GroupIcon />} disableElevation variant="contained" onClick={redirect("/employees")}>Employees</Button>
-				<Button startIcon={<LocalOfferIcon />} disableElevation variant="contained" onClick={redirect("/products")}>Products</Button>
-				<Button startIcon={<Inventory />} disableElevation variant="contained" onClick={redirect("/inventory")}>Inventory</Button>
-				<Button startIcon={<Work />} disableElevation variant="contained" onClick={redirect("/company")}>Company</Button>
-				<Box width={30} />
-				<Button startIcon={<Logout />} disableElevation variant="contained" onClick={() => {
-					sessionStorage.removeItem("doubletex-app-user");
-					window.dispatchEvent(new Event("storage"));
-				}}>Logout</Button>
-			</Toolbar>
-		</AppBar>
-	);
+  return (
+    <AppBar position='sticky' className='DoubleTexAppBar'>
+      <Toolbar>
+        <Typography
+          variant='h4'
+          noWrap
+          component='div'
+          sx={{ display: { xs: 'none', sm: 'block' }, cursor: 'pointer' }}
+          onClick={redirect('/')}>
+          DoubleTex
+        </Typography>
+        <Box sx={{ flexGrow: 1 }} />
+        <Button
+          startIcon={<GroupIcon />}
+          disableElevation
+          variant='contained'
+          onClick={redirect('/employees')}>
+          Employees
+        </Button>
+        <Button
+          startIcon={<LocalOfferIcon />}
+          disableElevation
+          variant='contained'
+          onClick={redirect('/products')}>
+          Products
+        </Button>
+        <Button
+          startIcon={<Inventory />}
+          disableElevation
+          variant='contained'
+          onClick={redirect('/inventory')}>
+          Inventory
+        </Button>
+        <Button
+          startIcon={<Work />}
+          disableElevation
+          variant='contained'
+          onClick={redirect('/company')}>
+          Company
+        </Button>
+        <Box width={30} />
+        <Button
+          startIcon={<Logout />}
+          disableElevation
+          variant='contained'
+          onClick={() => {
+            sessionStorage.removeItem('doubletex-app-user')
+            window.dispatchEvent(new Event('storage'))
+          }}>
+          Logout
+        </Button>
+      </Toolbar>
+    </AppBar>
+  )
 }
