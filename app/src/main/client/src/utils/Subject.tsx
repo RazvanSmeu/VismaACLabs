@@ -6,11 +6,62 @@ export type Subject<T> = {
   set(value: T): void
   reset(): void
   validation: Validation
+  setValidation(v: Validation): void
+  isReady: boolean
 }
 
-export function useSubject<T>(defaultValue: T, validate?: (value: T) => Validation): Subject<T> {
+export function useSubject<T>(
+  defaultValue: T = undefined as any,
+  validate?: (value: T) => Validation
+): Subject<T> {
   const [value, set] = useState<T>(defaultValue)
+  const [validationState, setValidation] = useState<Validation>(Valid)
 
+  function reset() {
+    set(defaultValue)
+  }
+
+  const validation = validate === undefined ? validationState : validate?.(value)
+
+  return {
+    value,
+    set,
+    reset,
+    validation,
+    setValidation,
+    isReady: value !== undefined
+  }
+}
+
+export function useSubjectField<P, K extends keyof P, C extends P[K]>(
+  parent: Subject<P>,
+  fieldName: keyof P,
+  validate?: (value: C) => Validation
+): Subject<C> {
+  if (!parent.isReady) {
+    return {
+      value: undefined as any,
+      set() {
+        // do nothing
+      },
+      reset() {
+        // do nothing
+      },
+      validation: Valid,
+      setValidation() {
+        // do nothing
+      },
+      isReady: false
+    }
+  }
+  const defaultValue = useMemo(() => parent.value[fieldName] as C, [])
+  const value = parent.value[fieldName] as C
+  function set(newValue: C): void {
+    parent.set({
+      ...parent.value,
+      [fieldName]: newValue
+    })
+  }
   function reset() {
     set(defaultValue)
   }
@@ -21,7 +72,11 @@ export function useSubject<T>(defaultValue: T, validate?: (value: T) => Validati
     value,
     set,
     reset,
-    validation
+    validation,
+    setValidation() {
+      // do nothing
+    },
+    isReady: parent.isReady
   }
 }
 

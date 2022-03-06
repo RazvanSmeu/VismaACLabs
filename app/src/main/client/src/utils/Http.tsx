@@ -1,4 +1,5 @@
 import { unstable_useIsFocusVisible } from '@mui/utils'
+import { Validation } from './Validated'
 
 export enum CrudMethod {
   GET = 'GET',
@@ -12,6 +13,13 @@ export enum ParamLocation {
   InQuery,
   InBody,
   Id
+}
+
+export type CrudAPI<T> = {
+  GET: Endpoint<number, T>
+  POST: Endpoint<T, Validation>
+  PUT: Endpoint<T, Validation>
+  DELETE: Endpoint<number, Validation>
 }
 
 export type Endpoint<In, Out> = {
@@ -58,7 +66,10 @@ export const Http = {
     info: RequestInit
   ): Promise<T> {
     let params = null as any as URLSearchParams
-    if (paramLocations.includes(ParamLocation.InQuery)) {
+    if (
+      paramLocations.includes(ParamLocation.InQuery) ||
+      paramLocations.includes(ParamLocation.Id)
+    ) {
       params = new URLSearchParams()
     }
     if (body) {
@@ -83,6 +94,18 @@ export const Http = {
     }
     if (paramLocations.includes(ParamLocation.InBody)) {
       info.body = JSON.stringify(body)
+    }
+    const token = sessionStorage.getItem('doubletex-app-user-token')
+    console.log(token)
+    info.headers = {
+      ...info.headers,
+      'Content-Type': 'application/json'
+    }
+    if (token !== null) {
+      info.headers = {
+        ...info.headers,
+        Authorization: 'Bearer ' + token
+      }
     }
     const response = await fetch(url, info)
     const object = await response.json()

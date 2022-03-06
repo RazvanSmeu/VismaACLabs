@@ -1,3 +1,4 @@
+import { watchFile } from 'fs'
 import { useEffect, useState } from 'react'
 import { Subject } from '../Subject'
 import { Valid } from '../Validated'
@@ -53,6 +54,7 @@ export function useStorage<T>(spec: StorageSpec<T>): Subject<T> {
     value: contents,
     set: setContents,
     reset: clear,
-    validation: Valid
+    validation: Valid,
+    isReady: true
   }
 }

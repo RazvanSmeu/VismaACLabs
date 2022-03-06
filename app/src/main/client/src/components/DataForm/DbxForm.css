@@ -1,0 +1,23 @@
+.dbx-form__wrapper {
+  margin: 45px;
+  width: fit-content;
+}
+
+.dbx-form__inner {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 40px;
+}
+
+.dbx-form__footer {
+  margin-top: auto;
+  padding-top: 40px;
+  justify-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.dbx-form__footer button {
+  padding: 10px 30px;
+}
