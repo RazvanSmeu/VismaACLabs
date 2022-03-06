@@ -20,7 +20,11 @@ function renderQuota(quota: number): React.ReactNode {
 export function EmployeeRow(props: EmployeeRowProps) {
   return (
     <TableRow key={props.employee.id}>
-      <TableCell>{props.employee.firstName + ' ' + props.employee.lastName}</TableCell>
+      <TableCell>
+        <a href={'/employee/?id=' + props.employee.id}>
+          {props.employee.firstName + ' ' + props.employee.lastName}
+        </a>
+      </TableCell>
       <TableCell>{props.employee.phoneNumber}</TableCell>
       <TableCell>{props.employee.email}</TableCell>
       <TableCell>{props.employee.jobTitle}</TableCell>

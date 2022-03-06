@@ -2,5 +2,7 @@
   background-color: white;
   border: 1px solid var(--main-color) !important;
   border-radius: 4px;
+  width: fit-content;
+  height: fit-content;
   /*overflow-x: none;*/
 }

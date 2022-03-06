@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@mui/material'
-import { DbxInput } from '../../components/DbxInput'
+import { DbxInput } from '../../components/Input/DbxInput'
 import { DbxPanel } from '../../components/DbxPanel'
 import { ErrorPopup } from '../../components/ErrorPopup'
 import { Subject, useSubject } from '../../utils/Subject'
@@ -27,7 +27,7 @@ export function LoginPanel(props: LoginPanelProps) {
     <>
       {props.responseValidation.value.isInvalid && (
         <ErrorPopup
-          message={props.responseValidation.value.message}
+          message={props.responseValidation.value.messages.join('; ')}
           close={() => props.responseValidation.set(Valid)}
         />
       )}

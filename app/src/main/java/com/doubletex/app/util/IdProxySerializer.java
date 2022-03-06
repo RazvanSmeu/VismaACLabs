@@ -8,6 +8,7 @@ import org.hibernate.proxy.HibernateProxy;
 
 import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
+import java.util.List;
 
 public class  IdProxySerializer<T extends BaseEntity> extends StdSerializer<T> {
     public IdProxySerializer() {
@@ -34,4 +35,8 @@ public class  IdProxySerializer<T extends BaseEntity> extends StdSerializer<T> {
             jsonGenerator.writeObject(t);
         }
     }
+
+//    public static class ForLists<T extends BaseEntity> extends StdSerializer<List<T>> {
+//
+//    }
 }

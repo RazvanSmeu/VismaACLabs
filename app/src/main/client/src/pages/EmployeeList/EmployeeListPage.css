@@ -26,6 +26,7 @@ table.MuiTable-root * {
 .employeeTable td:nth-child(1),
 td:nth-child(3) {
   color: #0000bb;
+  /* cursor: pointer; */
 }
 
 .employeeTable td:nth-child(5) {

@@ -12,6 +12,7 @@ import java.util.Date;
  */
 
 @Entity@Getter@Setter
+@NoArgsConstructor
 public class Employee extends BaseEntity {
     private String firstName;
     private String lastName;

@@ -43,3 +43,9 @@ export const USER_SESSION = StorageSpec<User | undefined>(
   'doubletex-app-user',
   undefined
 )
+
+export const USER_TOKEN = StorageSpec<string | undefined>(
+  Persistence.Session,
+  'doubletex-app-user-token',
+  undefined
+)

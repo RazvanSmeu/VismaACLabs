@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
                     "Either melt the token or use the token you have to make API calls.");
         }
         user.setLatestToken(generateToken());
-        System.out.println(user.getEmployee().getFirstName());
+        user.getEmployee().getCompany(); // populate
         userRepository.save(user);
         return user;
     }
