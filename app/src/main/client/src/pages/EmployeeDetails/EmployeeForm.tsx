@@ -20,7 +20,7 @@ export function EmployeeForm(props: EmployeeFormProps) {
   const monthlyHourQuota = useSubjectField(props.subject, 'monthlyHourQuota')
 
   return (
-    <DbxForm subject={props.subject} save={props.save}>
+    <DbxForm {...props}>
       <DbxInput label='First Name' subject={firstName} />
       <DbxInput label='Last name' subject={lastName} />
       <DbxInput label='E-mail' subject={email} />

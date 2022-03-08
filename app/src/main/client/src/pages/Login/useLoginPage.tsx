@@ -1,36 +1,41 @@
+import { useEffect } from 'react'
+import { showErrorPopup } from '../../components/ErrorPopup'
 import { LoginRequest, USER_LOGIN, USER_REGISTER, USER_SESSION } from '../../types/User'
-import { useSubject } from '../../utils/Subject'
-import { Invalid, Valid } from '../../utils/Validated'
+import { useSubject, useSubjectField } from '../../utils/Subject'
+import { Invalid, Valid, Validation } from '../../utils/Validated'
 import { LoginPageProps } from './LoginPage'
 
 export function useLoginPage(): LoginPageProps {
-  const userName = useSubject('')
-  const password = useSubject('')
+  const requestData = useSubject({
+    userName: '',
+    password: ''
+  })
+  const userName = useSubjectField(requestData, 'userName')
+  const password = useSubjectField(requestData, 'password')
   const responseValidation = useSubject(Valid)
   const userSubject = USER_SESSION.useSpec()
 
-  function makeRequest(): LoginRequest {
-    return {
-      userName: userName.value,
-      password: password.value
-    }
-  }
-
   async function doLogin() {
     try {
-      const user = await USER_LOGIN.call(makeRequest())
+      const user = await USER_LOGIN.call(requestData.value)
       userSubject.set(user)
-    } catch (e) {
-      responseValidation.set(Invalid.because('' + e))
+    } catch (e: any) {
+      if ('invalid' in e) {
+        requestData.setValidation(e as Validation)
+      }
+      throw e
     }
   }
 
   async function doRegister() {
     try {
-      const user = await USER_REGISTER.call(makeRequest())
+      const user = await USER_REGISTER.call(requestData.value)
       userSubject.set(user)
-    } catch (e) {
-      responseValidation.set(Invalid.because('' + e))
+    } catch (e: any) {
+      if ('invalid' in e) {
+        requestData.setValidation(e as Validation)
+      }
+      throw e
     }
   }
 

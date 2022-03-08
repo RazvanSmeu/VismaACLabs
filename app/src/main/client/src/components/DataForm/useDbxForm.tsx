@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Identifiable } from '../../types/Identifiable'
 import { CrudAPI, Endpoint } from '../../utils/Http'
 import { useSubject, useUnstableSubject } from '../../utils/Subject'
 import { Validation } from '../../utils/Validated'
-import { DbxFormProps } from './DbxForm'
+import { DbxFormProps, DbxFormState } from './DbxForm'
 
 export function useDbxFormByEndpoint<T extends Identifiable>(
   objectId: number,
@@ -11,6 +11,7 @@ export function useDbxFormByEndpoint<T extends Identifiable>(
   api: CrudAPI<T>
 ): DbxFormProps<T> {
   const subject = useSubject<T>()
+  const [state, setState] = useState<DbxFormState>('IDLE')
   useEffect(() => {
     fetchData()
   }, [])
@@ -19,15 +20,31 @@ export function useDbxFormByEndpoint<T extends Identifiable>(
     if (objectId === 0) {
       subject.set(template)
     } else {
-      subject.set(await api.GET.call(objectId))
+      const result = await api.GET.call(objectId)
+      if ('invalid' in result) {
+        alert('Validation error')
+      } else {
+        subject.set(result)
+      }
     }
   }
 
-  function save() {
-    if (subject.value.id === 0) {
-      api.POST.call(subject.value)
-    } else {
-      api.PUT.call(subject.value)
+  async function save() {
+    const endpoint = subject.value.id === 0 ? api.POST : api.PUT
+    setState('PROCESSING')
+    try {
+      await endpoint.call(subject.value)
+      setState('SUCCESS')
+    } catch (e: any) {
+      if ('invalid' in e) {
+        subject.setValidation(e as Validation)
+      }
+      setState('FAILURE')
+      throw e
+    } finally {
+      setTimeout(() => {
+        setState('IDLE')
+      }, 2000)
     }
   }
 
@@ -38,7 +55,8 @@ export function useDbxFormByEndpoint<T extends Identifiable>(
   return {
     subject,
     save,
-    remove
+    remove,
+    state
   }
 }
 

@@ -53,7 +53,7 @@ export function Endpoint<In, Out>(
         info: RequestInit
       ) => Promise<Out> = Http.request
     ): Promise<Out> {
-      return facilitator(url, input, paramLocations, { method })
+      return await facilitator(url, input, paramLocations, { method })
     }
   }
 }
@@ -96,7 +96,6 @@ export const Http = {
       info.body = JSON.stringify(body)
     }
     const token = sessionStorage.getItem('doubletex-app-user-token')
-    console.log(token)
     info.headers = {
       ...info.headers,
       'Content-Type': 'application/json'
@@ -110,12 +109,8 @@ export const Http = {
     const response = await fetch(url, info)
     const object = await response.json()
 
-    if (!response.ok) {
-      if (object.message) {
-        throw object.message
-      } else {
-        throw object
-      }
+    if (!response.ok || object.invalid) {
+      throw object
     }
 
     return object

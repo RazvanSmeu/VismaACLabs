@@ -3,7 +3,7 @@ body {
 }
 
 .doubleTex__contentPane {
-  padding: 50px 80px;
+  padding: 30px 80px;
   overflow-y: auto;
   display: flex;
   justify-content: center;

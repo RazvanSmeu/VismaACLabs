@@ -2,10 +2,11 @@ package com.doubletex.app.api.user;
 
 import com.doubletex.app.api.employee.Employee;
 import com.doubletex.app.api.employee.EmployeeRepository;
+import com.doubletex.app.util.validation.Check;
+import com.doubletex.app.util.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,13 +22,12 @@ public class UserServiceImpl implements UserService {
     }
 
     protected User resolveUser(String userName, String password) {
-        validateUserName(userName);
-        validatePassword(password);
+        validateUserName(userName).and(validatePassword(password)).throwIfNecessary();
         Optional<User> potentialUser = userRepository.findByUserName(userName);
         if(potentialUser.isEmpty()) {
-            throw new UserException("User name could not be found.");
+            throw new Validation("User name could not be found.");
         } else if(!potentialUser.get().getPasswordHash().equals(password)) {
-            throw new UserException("Password is invalid.");
+            throw new Validation("Password is invalid.");
         } else {
             return potentialUser.get();
         }
@@ -36,8 +36,14 @@ public class UserServiceImpl implements UserService {
     public User login(String userName, String password) {
         User user = resolveUser(userName, password);
         if(user.isTokenFrozen()) {
-            throw new UserException("Cannot login because the user token is frozen. " +
-                    "Either melt the token or use the token you have to make API calls.");
+            throw new Validation(
+                "Cannot login because the user token is frozen. " +
+                "Either melt the token or use the token you have to make API calls.",
+                new Validation.Field(
+                    "lastToken",
+                    "Token is frozen"
+                )
+            );
         }
         user.setLatestToken(generateToken());
         user.getEmployee().getCompany(); // populate
@@ -50,7 +56,13 @@ public class UserServiceImpl implements UserService {
         if(userOptional.isPresent()) {
             return userOptional.get();
         } else {
-            throw new UserException("User token was invalid. Try logging in again.");
+            throw new Validation(
+                    "User token was invalid. Try logging in again.",
+                    new Validation.Field(
+                            "token",
+                            "Invalid for user."
+                    )
+            );
         }
     }
 
@@ -59,11 +71,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public User register(String userName, String password) {
-        validateUserName(userName);
-        validatePassword(password);
+        validateUserName(userName).and(validatePassword(password)).throwIfNecessary();
         Optional<User> optionalUser = userRepository.findByUserName(userName);
         if(optionalUser.isPresent()) {
-            throw new UserException("User already exists.");
+            throw new Validation("User already exists.");
         } else {
             User newUser = new User();
             Employee employee = new Employee();
@@ -78,29 +89,41 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void validateUserName(String userName) {
-        if(userName.length() > 16) {
-            throw new UserException("User name cannot be longer than 16 characters.");
-        }
-        if(userName.contains(" ")) {
-            throw new UserException("User name cannot contain spaces.");
-        }
+    public Validation validateUserName(String userName) {
+        return Validation.checkAll(
+            Check.that(
+                userName.length() > 16,
+                "userName",
+                "Cannot be longer thant 16 characters."
+            ),
+            Check.that(
+                userName.contains(" "),
+                "userName",
+                "Cannot contain spaces"
+            )
+        );
     }
 
-    public void validatePassword(String password) {
-        if(password.length() > 16) {
-            throw new UserException("Password cannot be longer than 16 characters.");
-        }
-        if(password.contains(" ")) {
-            throw new UserException("Password cannot contain spaces.");
-        }
+    public Validation validatePassword(String password) {
+        return Validation.checkAll(
+            Check.that(
+                password.length() > 16,
+                "password",
+                "Cannot be longer than 16 characters"
+            ),
+            Check.that(
+                password.contains(" "),
+                "password",
+                "Cannot contain spaces."
+            )
+        );
     }
 
     @Override
     public User freezeToken(String userName, String password) {
         User user = resolveUser(userName, password);
         if(user.isTokenFrozen()) {
-            throw new UserException("User token is already frozen.");
+            throw new Validation("User token is already frozen.");
         }
         user.setLatestToken(generateToken());
         user.setTokenFrozen(true);
@@ -112,7 +135,7 @@ public class UserServiceImpl implements UserService {
     public User meltToken(String userName, String password) {
         User user = resolveUser(userName, password);
         if(!user.isTokenFrozen()) {
-            throw new UserException("User token is not frozen");
+            throw new Validation("User token is not frozen");
         }
         user.setTokenFrozen(false);
         user.setLatestToken(generateToken());

@@ -6,6 +6,7 @@ import com.doubletex.app.util.Credentials;
 import com.doubletex.app.util.PageRequest;
 import com.doubletex.app.util.PageResponse;
 import com.doubletex.app.util.Filter;
+import com.doubletex.app.util.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee update(Employee employee) {
-        return employeeRepository.save(employee);
+        throw new Validation("Problems", new Validation.Field("email", "wrong"));
+//        return employeeRepository.save(employee);
     }
 
 

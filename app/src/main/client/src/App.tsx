@@ -1,5 +1,6 @@
 import React from 'react'
 import './App.css'
+import { GlobalErrorPopup } from './components/ErrorPopup'
 import './dbx-globals.css'
 import AppFrame from './pages/AppFrame/AppFrame'
 import { LoginPage } from './pages/Login/LoginPage'
@@ -10,11 +11,19 @@ function App() {
   const userSubject = USER_SESSION.useSpec()
   const loginPageProps = useLoginPage()
 
+  let page: React.ReactNode
   if (userSubject.value !== undefined) {
-    return <AppFrame />
+    page = <AppFrame />
   } else {
-    return <LoginPage {...loginPageProps} />
+    page = <LoginPage {...loginPageProps} />
   }
+
+  return (
+    <>
+      <GlobalErrorPopup />
+      {page}
+    </>
+  )
 }
 
 export default App
