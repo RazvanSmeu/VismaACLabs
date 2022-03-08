@@ -14,15 +14,15 @@ import java.util.Date;
 @Entity@Getter@Setter
 @NoArgsConstructor
 public class Employee extends BaseEntity {
-    private String firstName;
-    private String lastName;
-    private Date birthdate;
-    private String phoneNumber;
-    private String email;
-    private String jobTitle;
-    private double monthlySalary;
-    private int monthlyHourQuota;
+    private String firstName = "";
+    private String lastName = "";
+    private Date birthdate = new Date();
+    private String phoneNumber = "";
+    private String email = "";
+    private String jobTitle = "";
+    private double monthlySalary = 0;
+    private int monthlyHourQuota = 0;
 
     @ManyToOne
-    private Company company;
+    private Company company = null;
 }

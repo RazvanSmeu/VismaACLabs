@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Invalid, Valid, Validation } from './Validated'
 
 export type Subject<T> = {
@@ -7,6 +7,7 @@ export type Subject<T> = {
   reset(): void
   validation: Validation
   setValidation(v: Validation): void
+  onChange(handler: (newValue: T) => void): void
   isReady: boolean
 }
 
@@ -23,12 +24,19 @@ export function useSubject<T>(
 
   const validation = validate === undefined ? validationState : validate?.(value)
 
+  function onChange(handler: (newValue: T) => void) {
+    useEffect(() => {
+      handler(value)
+    }, [value])
+  }
+
   return {
     value,
     set,
     reset,
     validation,
     setValidation,
+    onChange,
     isReady: value !== undefined
   }
 }
@@ -38,6 +46,12 @@ export function useSubjectField<P, K extends keyof P, C extends P[K]>(
   fieldName: keyof P,
   validate?: (value: C) => Validation
 ): Subject<C> {
+  function onChange(handler: (newValue: C) => void) {
+    // useEffect(() => {
+    //   handler(value)
+    // }, [value])
+  }
+
   if (!parent.isReady) {
     return {
       value: undefined as any,
@@ -51,7 +65,8 @@ export function useSubjectField<P, K extends keyof P, C extends P[K]>(
       setValidation() {
         // do nothing
       },
-      isReady: false
+      isReady: false,
+      onChange
     }
   }
   const defaultValue = useMemo(() => parent.value[fieldName] as C, [])
@@ -76,7 +91,8 @@ export function useSubjectField<P, K extends keyof P, C extends P[K]>(
     setValidation() {
       // do nothing
     },
-    isReady: parent.isReady
+    isReady: parent.isReady,
+    onChange
   }
 }
 

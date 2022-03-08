@@ -20,6 +20,6 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     @With
-    private Long id;
-    private boolean isInitialized;
+    private Long id = 0L;
+    private boolean isInitialized = true;
 }

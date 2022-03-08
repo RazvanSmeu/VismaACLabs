@@ -2,6 +2,11 @@ package com.doubletex.app.api.employee;
 
 import com.doubletex.app.util.PageRequest;
 import com.doubletex.app.util.PageResponse;
+import com.doubletex.app.util.ValidationException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +51,8 @@ public class EmployeeAPI {
 
     @DeleteMapping("/{id}")
     public Boolean delete(@PathVariable Long id) {
-        return employeeService.delete(id);
+        throw new ValidationException("name", "too long");
+//        return employeeService.delete(id);
     }
 
     @PostMapping("/dataBookQuery")

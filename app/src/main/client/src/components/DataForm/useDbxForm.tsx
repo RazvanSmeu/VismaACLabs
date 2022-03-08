@@ -45,7 +45,7 @@ export function useDbxFormByEndpoint<T extends Identifiable>(
 export function useDbxFormTest<T extends Identifiable>(template: T) {
   const subject = useSubject(template)
   function save() {
-    console.dir(subject)
+    console.dir(subject.value)
     alert('Saved')
   }
   return {

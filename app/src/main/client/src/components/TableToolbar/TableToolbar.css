@@ -27,3 +27,8 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+.tableToolbar .dbx-input > * {
+  height: 40px !important;
+  padding: 10px;
+}

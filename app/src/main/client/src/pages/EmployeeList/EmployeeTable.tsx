@@ -1,4 +1,5 @@
 import {
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -14,6 +15,7 @@ import { DataBook, evolveBookControls } from '../../utils/DataBook'
 import { TableToolbar } from '../../components/TableToolbar/TableToolbar'
 import { Filtered } from '../../utils/Filter'
 import { EmployeeListFilterOperation } from './EmployeeListPage'
+import { PlusOne, PlusOneOutlined, PlusOneSharp, PlusOneTwoTone } from '@mui/icons-material'
 
 export type EmployeeTableProps = {
   employeesBook: DataBook<Employee> & Filtered<EmployeeListFilterOperation>
@@ -22,7 +24,11 @@ export type EmployeeTableProps = {
 export function EmployeeTable({ employeesBook }: EmployeeTableProps) {
   return (
     <TableContainer component={Paper} className={'employeeTable'}>
-      <TableToolbar book={evolveBookControls(employeesBook)} />
+      <TableToolbar book={evolveBookControls(employeesBook)}>
+        <IconButton>
+          <PlusOneSharp />
+        </IconButton>
+      </TableToolbar>
       <Table>
         <TableHead>
           <TableRow key='header'>
