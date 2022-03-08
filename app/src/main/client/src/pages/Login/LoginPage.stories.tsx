@@ -1,4 +1,3 @@
-import { LoginPage } from './LoginPage'
 import { LoginPanel } from './LoginPanel'
 import { useTestLoginPage } from './useLoginPage'
 

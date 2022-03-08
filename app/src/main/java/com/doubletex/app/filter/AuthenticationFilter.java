@@ -4,8 +4,7 @@ import com.doubletex.app.api.employee.Employee;
 import com.doubletex.app.api.user.User;
 import com.doubletex.app.api.user.UserService;
 import com.doubletex.app.util.Credentials;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -15,8 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 
+@Slf4j
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
     private final UserService userService;
@@ -25,8 +24,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     public AuthenticationFilter(UserService userService) {
         this.userService = userService;
     }
-
-    private final static Logger LOG = LoggerFactory.getLogger(com.doubletex.app.filter.DoubletexFilter.class);
 
     private void setupCredentials(String authToken) {
         try {

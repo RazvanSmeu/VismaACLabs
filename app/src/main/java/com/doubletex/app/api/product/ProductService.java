@@ -9,7 +9,9 @@ public interface ProductService {
 
     Product findById(Long id);
 
-    Product update(Product product);
+    Product save(Product product);
 
     Product restock(Long id, Integer quantity);
+
+    Boolean delete(Long id);
 }

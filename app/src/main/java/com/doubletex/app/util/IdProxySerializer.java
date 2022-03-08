@@ -1,14 +1,12 @@
 package com.doubletex.app.util;
 
+import com.doubletex.app.api.BaseEntity;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.hibernate.proxy.HibernateProxy;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
-import java.util.List;
 
 public class  IdProxySerializer<T extends BaseEntity> extends StdSerializer<T> {
     public IdProxySerializer() {

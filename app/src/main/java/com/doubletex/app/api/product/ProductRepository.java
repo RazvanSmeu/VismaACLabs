@@ -13,7 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Modifying
     @Query("UPDATE Product p " +
-            "SET p.quantity = ?2 " +
+            "SET p.quantity = p.quantity + ?2 " +
             "WHERE p.id = ?1")
     Product updateProductQuantityById(Long id, Integer quantity);
 

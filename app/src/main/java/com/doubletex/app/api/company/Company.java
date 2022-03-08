@@ -2,7 +2,7 @@ package com.doubletex.app.api.company;
 
 import com.doubletex.app.api.employee.Employee;
 import com.doubletex.app.api.product.Product;
-import com.doubletex.app.util.BaseEntity;
+import com.doubletex.app.api.BaseEntity;
 import com.doubletex.app.util.IdProxySerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;

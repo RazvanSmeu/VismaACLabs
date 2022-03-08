@@ -1,3 +1,6 @@
 .addProduct__container {
+  width: 30vw;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

@@ -1,7 +1,7 @@
 package com.doubletex.app.api.user;
 
 import com.doubletex.app.api.employee.Employee;
-import com.doubletex.app.util.BaseEntity;
+import com.doubletex.app.api.BaseEntity;
 import com.doubletex.app.util.IdProxySerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;

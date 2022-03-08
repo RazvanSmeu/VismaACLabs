@@ -1,4 +1,4 @@
-package com.doubletex.app.util;
+package com.doubletex.app.api;
 
 import lombok.*;
 

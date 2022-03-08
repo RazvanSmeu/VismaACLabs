@@ -24,18 +24,23 @@ public class ProductAPI {
         return productService.findById(id);
     }
 
-    @PutMapping()
-    public Product update(@RequestBody Product product) {
-        return productService.update(product);
+    @PostMapping()
+    public Product create(@RequestBody Product product) {
+        return productService.save(product);
     }
 
-    @PutMapping("/restock/{id}")
+    @PutMapping()
+    public Product update(@RequestBody Product product) {
+        return productService.save(product);
+    }
+
+    @DeleteMapping("/{id}")
+    public Boolean delete(@PathVariable Long id) {
+        return productService.delete(id);
+    }
+
+    @PutMapping("/{id}/restock")
     public Product restock(@PathVariable Long id, @RequestParam Integer quantity) {
         return productService.restock(id, quantity);
     }
-
-//    @PostMapping()
-//    public Product create() {
-
-//    }
 }
