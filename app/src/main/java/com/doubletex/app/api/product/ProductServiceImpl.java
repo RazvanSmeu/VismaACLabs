@@ -2,6 +2,8 @@ package com.doubletex.app.api.product;
 
 import com.doubletex.app.exceptions.DoubletexNotFound;
 import com.doubletex.app.util.Validations;
+import com.doubletex.app.util.validation.Check;
+import com.doubletex.app.util.validation.Validation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,18 @@ public class ProductServiceImpl implements ProductService {
 
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    public Validation validateCreate2(Product product) {
+        log.debug(String.valueOf(product));
+        return Validation.checkAll(
+            Check.notNull(product.getName(), "name"),
+            Check.notNull(product.getQuantity(), "price"),
+            Check.notNull(product.getPrice(), "quantity"),
+            Check.notEmpty(product.getName(), "name"),
+            Check.positive(product.getPrice(), "price"),
+            Check.positive(product.getQuantity(), "quantity")
+        );
     }
 
     public static void validateCreate(Product product) {
@@ -42,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product save(Product product) {
+        validateCreate2(product).throwIfNecessary();
         validateCreate(product);
         Validations.throwValidationException();
         return productRepository.save(product);
@@ -55,6 +70,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Boolean delete(Long id) {
         productRepository.deleteById(id);
-        return Boolean.TRUE;
+        return true;
     }
 }

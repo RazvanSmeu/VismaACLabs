@@ -23,4 +23,27 @@ public class Check {
         return new Check(fieldName, message, isOk);
     }
 
+    public static Check notNull(Object object, String field) {
+        return Check.that(
+            object != null,
+            field,
+            "Must be defined"
+        );
+    }
+
+    public static Check positive(Number number, String field) {
+        return Check.that(
+            number.doubleValue() >= 0,
+            field,
+            "Must be greater than 0"
+        );
+    }
+
+    public static Check notEmpty(String string, String field) {
+        return Check.that(
+            !string.isEmpty(),
+            field,
+            "Cannot be empty"
+        );
+    }
 }
