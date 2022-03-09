@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 import { GlobalErrorPopup } from './components/ErrorPopup'
+import { DbxNotifications } from './components/notifications/DbxNotifications'
 import './dbx-globals.css'
 import AppFrame from './pages/AppFrame/AppFrame'
 import { LoginPage } from './pages/Login/LoginPage'
@@ -19,10 +20,10 @@ function App() {
   }
 
   return (
-    <>
-      <GlobalErrorPopup />
+    <div className='app-container'>
+      <DbxNotifications />
       {page}
-    </>
+    </div>
   )
 }
 

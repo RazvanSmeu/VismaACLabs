@@ -3,6 +3,7 @@ import { Identifiable } from '../../types/Identifiable'
 import { CrudAPI, Endpoint } from '../../utils/Http'
 import { useSubject, useUnstableSubject } from '../../utils/Subject'
 import { Validation } from '../../utils/Validated'
+import { dbxNotify } from '../notifications/DbxNotifications'
 import { DbxFormProps, DbxFormState } from './DbxForm'
 
 export function useDbxFormByEndpoint<T extends Identifiable>(
@@ -31,9 +32,19 @@ export function useDbxFormByEndpoint<T extends Identifiable>(
 
   async function save() {
     const endpoint = subject.value.id === 0 ? api.POST : api.PUT
+    dbxNotify({
+      type: 'info',
+      title: 'Sending...',
+      message: 'Data is being sent'
+    })
     setState('PROCESSING')
     try {
       await endpoint.call(subject.value)
+      dbxNotify({
+        type: 'success',
+        title: 'Success!',
+        message: 'Data saved'
+      })
       setState('SUCCESS')
     } catch (e: any) {
       if ('invalid' in e) {

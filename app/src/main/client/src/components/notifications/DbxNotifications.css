@@ -1,0 +1,31 @@
+div.rnc__notification-container--top-right {
+  margin-top: 60px;
+}
+
+/*
+
+div.rnc__notification-item {
+  border: var(--dbx-border);
+  border-radius: var(--dbx-border-radius) !important;
+  box-shadow: none;
+  margin-bottom: 15px;
+  overflow: hidden;
+  background-color: white;
+}
+
+div.rnc__notification-content {
+  margin-bottom: 0;
+}
+*/
+/* 
+.rnc__notification-item--success * {
+  background-color: var(--success-color);
+}
+
+.rnc__notification-item--danger * {
+  background-color: var(--err-color);
+}
+
+.rnc__notification-item--info * {
+  background-color: var(--info-color);
+} */

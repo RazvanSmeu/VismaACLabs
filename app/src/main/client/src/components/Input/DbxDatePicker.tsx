@@ -22,9 +22,13 @@ export function DbxDatePicker(props: DbxInputProps) {
         renderInput={(params) => (
           <TextField
             {...params}
+            defaultValue=''
             onChange={(event) => {
-              props.subject.set(event.target.value)
+              // props.subject.set(event.target.value)
             }}
+            onKeyUp={(e) => e.preventDefault()}
+            onKeyPress={(e) => e.preventDefault()}
+            onKeyDown={(e) => e.preventDefault()}
           />
         )}
         // error={props.subject.validation.isInvalid}

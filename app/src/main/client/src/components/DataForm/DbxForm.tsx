@@ -5,6 +5,7 @@ import { DbxInput } from '../Input/DbxInput'
 import { Subject } from '../../utils/Subject'
 import './DbxForm.css'
 import { Close, DoneAll, HourglassBottom } from '@mui/icons-material'
+import { Identifiable } from '../../types/Identifiable'
 
 export type DbxFormState = 'IDLE' | 'PROCESSING' | 'SUCCESS' | 'FAILURE'
 
@@ -15,7 +16,7 @@ export type DbxFormProps<T> = {
   state: DbxFormState
 }
 
-export function DbxForm<T>(
+export function DbxForm<T extends Identifiable>(
   props: DbxFormProps<T> & {
     children: React.ReactNode
   }
@@ -34,27 +35,19 @@ export function DbxForm<T>(
               disabled={props.subject.validation.invalid}>
               Save
             </Button>
-            <Button
-              variant='text'
-              onClick={() => {
-                props.remove?.()
-              }}
-              disabled={props.subject.validation.invalid}>
-              Delete
-            </Button>
+            {props.subject.value.id != 0 && (
+              <Button
+                variant='text'
+                onClick={() => {
+                  props.remove?.()
+                }}
+                disabled={props.subject.validation.invalid}>
+                Delete
+              </Button>
+            )}
             {props.state === 'PROCESSING' && (
               <IconButton>
                 <HourglassBottom />
-              </IconButton>
-            )}
-            {props.state === 'SUCCESS' && (
-              <IconButton>
-                <DoneAll />
-              </IconButton>
-            )}
-            {props.state === 'FAILURE' && (
-              <IconButton>
-                <Close />
               </IconButton>
             )}
           </div>

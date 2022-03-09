@@ -1,15 +1,10 @@
 import { Invalid, Valid, Validation } from '../Validated'
 
 export function validateEmail(text: string): Validation {
-  if (text === '') {
-    return Valid
-  }
-  if (!text.includes('@')) {
-    return Invalid.because('E-mail invalid, no @ present.')
-  }
-  if (!text.includes('.')) {
-    return Invalid.because('No domain ending.')
-  }
-
-  return Valid
+  return Validation.first({
+    'Cannot be null': text == null,
+    'Cannot be empty': text.length === 0,
+    'No domain ending': !text.includes('.'),
+    'No @ present': !text.includes('@')
+  })
 }

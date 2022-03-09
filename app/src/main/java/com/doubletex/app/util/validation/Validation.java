@@ -3,10 +3,7 @@ package com.doubletex.app.util.validation;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Data
@@ -21,7 +18,7 @@ public class Validation extends RuntimeException {
     public Validation(String message, Field ...fields) {
         super(message);
         this.message = message;
-        this.fields = Arrays.asList(fields);
+        this.fields = new ArrayList<>(Arrays.asList(fields));
     }
 
     public boolean getInvalid() {
@@ -30,7 +27,7 @@ public class Validation extends RuntimeException {
 
     public Validation checking(Check... checks) {
         for(Check check : checks) {
-            if(check.isOk()) {
+            if(!check.isOk()) {
                 getFields().add(new Field(check.getFieldName(), check.getMessage()));
             }
         }
@@ -60,7 +57,7 @@ public class Validation extends RuntimeException {
     public void throwIfNecessary() {
         if(getInvalid()) {
             if(getMessage() == null || getMessage().isEmpty()) {
-                setMessage("There are validation errors.");
+                setMessage("There are field validation errors.");
             }
             throw this;
         }

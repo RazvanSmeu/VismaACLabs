@@ -9,19 +9,27 @@ export type ValidationField = {
   message: string
 }
 
-// export const Validation = {
-//   concat(...validations: Validation[]): Validation {
-//     let messages: string[] = []
-//     for (const validation of validations) {
-//       messages = [...messages, ...validation.messages]
-//     }
-//     if (messages === []) {
-//       return Valid
-//     } else {
-//       return Invalid.because(...messages)
-//     }
-//   }
-// }
+export const Validation = {
+  first(object: { [key: string]: boolean }): Validation {
+    for (const [key, value] of Object.entries(object)) {
+      if (value) {
+        return Invalid.because(key)
+      }
+    }
+    return Valid
+  }
+  // concat(...validations: Validation[]): Validation {
+  //   let messages: string[] = []
+  //   for (const validation of validations) {
+  //     messages = [...messages, ...validation.messages]
+  //   }
+  //   if (messages === []) {
+  //     return Valid
+  //   } else {
+  //     return Invalid.because(...messages)
+  //   }
+  // }
+}
 
 export const Valid: Validation = {
   invalid: false,

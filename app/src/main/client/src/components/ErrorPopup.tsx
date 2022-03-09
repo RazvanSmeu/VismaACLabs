@@ -4,6 +4,8 @@ import './ErrorPopup.css'
 import { DbxPanel } from './DbxPanel'
 import { Valid, Validation } from '../utils/Validated'
 import { useTimeValidation } from '@mui/lab/internal/pickers/hooks/useValidation'
+import 'react-notifications-component/dist/theme.css'
+import { Store } from 'react-notifications-component'
 
 export type ErrorPopupProps = {
   children: React.ReactNode
@@ -38,8 +40,23 @@ export function GlobalErrorPopup() {
         event.reason != undefined &&
         'invalid' in event.reason &&
         event.reason.invalid
-      )
-        showErrorPopup(event.reason as Validation)
+      ) {
+        // showErrorPopup(event.reason as Validation)
+        const validation = event.reason as Validation
+        console.log(validation)
+        Store.addNotification({
+          title: 'Validation Error',
+          message: validation.message,
+          type: 'danger',
+          container: 'top-right',
+          animationIn: ['animate__animated', 'animate__fadeIn'],
+          animationOut: ['animate__animated', 'animate__fadeOut'],
+          dismiss: {
+            duration: 5000,
+            onScreen: true
+          }
+        })
+      }
     })
   }, [])
   return (
