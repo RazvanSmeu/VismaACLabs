@@ -22,9 +22,9 @@ export function AddProduct({
   submitProduct
 }: AddProductProps) {
   return (
-    <div>
+    <div className={'addProduct'}>
       <InventoryIcon />
-      <h2> Add Product</h2>
+      <h1> Add Product</h1>
       <div className={'addProduct__container'}>
         <DbxInput
           id={'product-name'}

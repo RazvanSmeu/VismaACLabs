@@ -2,5 +2,8 @@
   width: 30vw;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 40px;
+  background-color: white;
+  padding: 50px;
+  border: 1px solid var(--main-color);
 }

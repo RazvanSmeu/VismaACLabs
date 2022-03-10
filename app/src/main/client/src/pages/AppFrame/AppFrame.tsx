@@ -6,6 +6,7 @@ import { DoubleTexAppBar } from '../../components/DoubleTexAppBar/DoubleTexAppBa
 import { DoubleTextContentPane } from '../../components/DoubleTexContentPane/DoubleTexContentPane'
 import { AddProductPage } from '../AddProduct/AddProduct'
 import { EmployeeDetailsPageRoute } from '../EmployeeDetails/EmployeeDetailsPage'
+import Products from '../Products/Products'
 
 export default function AppFrame() {
   return (
@@ -17,6 +18,7 @@ export default function AppFrame() {
         <Route path='/employees' element={<EmployeeListPageRoute />} />
         {/*<Route path='/account' element={<EmployeeDetailsPage />} />*/}
         <Route path='/addProduct' element={<AddProductPage />} />
+        <Route path='/products' element={<Products />} />
       </DoubleTextContentPane>
     </div>
   )

@@ -7,10 +7,12 @@ export interface Product extends Identifiable {
   price: number
 }
 
-type ProductBody = Omit<Product, 'id'>
+type CreateProductBody = Omit<Product, 'id'>
 
-export const CREATE_PRODUCT = Endpoint<ProductBody, Product>(
+export const CREATE_PRODUCT = Endpoint<CreateProductBody, Product>(
   CrudMethod.POST,
   '/api/product/',
   ParamLocation.InBody
 )
+
+export const FETCH_PRODUCTS = Endpoint<void, Array<Product>>(CrudMethod.GET, '/api/product/')
