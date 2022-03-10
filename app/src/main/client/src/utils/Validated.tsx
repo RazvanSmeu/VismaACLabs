@@ -1,39 +1,53 @@
 export interface Validation {
-  readonly isValid: boolean
-  readonly isInvalid: boolean
-  readonly messages: string[]
+  readonly invalid: boolean
+  readonly message: string
+  readonly fields: ValidationField[]
+}
+
+export type ValidationField = {
+  name: string
+  message: string
 }
 
 export const Validation = {
-  concat(...validations: Validation[]): Validation {
-    let messages: string[] = []
-    for (const validation of validations) {
-      messages = [...messages, ...validation.messages]
+  first(object: { [key: string]: boolean }): Validation {
+    for (const [key, value] of Object.entries(object)) {
+      if (value) {
+        return Invalid.because(key)
+      }
     }
-    if (messages === []) {
-      return Valid
-    } else {
-      return Invalid.because(...messages)
-    }
+    return Valid
   }
+  // concat(...validations: Validation[]): Validation {
+  //   let messages: string[] = []
+  //   for (const validation of validations) {
+  //     messages = [...messages, ...validation.messages]
+  //   }
+  //   if (messages === []) {
+  //     return Valid
+  //   } else {
+  //     return Invalid.because(...messages)
+  //   }
+  // }
 }
 
 export const Valid: Validation = {
-  isValid: true,
-  isInvalid: false,
-  messages: []
+  invalid: false,
+  message: '',
+  fields: []
 }
 
 export class Invalid implements Validation {
-  isValid: boolean = false
-  isInvalid: boolean = true
-  messages: string[] = []
+  invalid: boolean = true
+  message: string = ''
+  fields: ValidationField[] = []
 
-  private constructor(...messages: string[]) {
-    this.messages = messages
+  public constructor(message: string, ...fields: ValidationField[]) {
+    this.message = message
+    this.fields = fields
   }
 
-  static because(...causes: string[]) {
-    return new Invalid(...causes)
+  static because(cause: string, ...fields: ValidationField[]) {
+    return new Invalid(cause, ...fields)
   }
 }

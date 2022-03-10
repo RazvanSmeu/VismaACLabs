@@ -72,16 +72,49 @@ export function useSubjectField<P, K extends keyof P, C extends P[K]>(
   const defaultValue = useMemo(() => parent.value[fieldName] as C, [])
   const value = parent.value[fieldName] as C
   function set(newValue: C): void {
+    const parentValidationsWithoutThis = parent.validation.fields.filter((f) => {
+      f.name !== fieldName
+    })
     parent.set({
       ...parent.value,
       [fieldName]: newValue
     })
+    if (parentValidationsWithoutThis.length === 0) {
+      parent.setValidation(Valid)
+    } else {
+      parent.setValidation({
+        ...parent.validation,
+        fields: parentValidationsWithoutThis
+      })
+    }
   }
   function reset() {
     set(defaultValue)
   }
 
-  const validation = validate === undefined ? Valid : validate?.(value)
+  let validation = validate === undefined ? Valid : validate?.(value)
+  if (parent.validation.invalid) {
+    const ownValidations = parent.validation.fields
+      .filter((f) => {
+        return f.name === fieldName
+      })
+      .map((f) => f.message)
+      .join('; ')
+    if (ownValidations.length > 0) {
+      validation = Invalid.because(ownValidations)
+    }
+  }
+
+  useEffect(() => {
+    if (!parent.validation.invalid && validation.invalid) {
+      parent.setValidation(
+        Invalid.because('There are field validation errors', {
+          name: '' + fieldName,
+          message: validation.message
+        })
+      )
+    }
+  }, [validation])
 
   return {
     value,

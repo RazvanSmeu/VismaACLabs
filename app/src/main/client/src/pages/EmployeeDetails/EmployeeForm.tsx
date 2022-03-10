@@ -6,21 +6,23 @@ import { DbxInput } from '../../components/Input/DbxInput'
 import { Employee } from '../../types/Employee'
 import { useSubjectField, Subject } from '../../utils/Subject'
 import { validateEmail } from '../../utils/validation/EmailValidation'
+import { validateName } from '../../utils/validation/NameValidation'
+import { validatePhoneNumber } from '../../utils/validation/PhoneNumberValidation'
 
 export type EmployeeFormProps = DbxFormProps<Employee>
 
 export function EmployeeForm(props: EmployeeFormProps) {
-  const firstName = useSubjectField(props.subject, 'firstName')
+  const firstName = useSubjectField(props.subject, 'firstName', validateName)
   const lastName = useSubjectField(props.subject, 'lastName')
   const email = useSubjectField(props.subject, 'email', validateEmail)
-  const phoneNumber = useSubjectField(props.subject, 'phoneNumber')
+  const phoneNumber = useSubjectField(props.subject, 'phoneNumber', validatePhoneNumber)
   const birthdate: Subject<string> = useSubjectField(props.subject, 'birthdate')
   const jobTitle = useSubjectField(props.subject, 'jobTitle')
   const monthlySalary = useSubjectField(props.subject, 'monthlySalary')
   const monthlyHourQuota = useSubjectField(props.subject, 'monthlyHourQuota')
 
   return (
-    <DbxForm subject={props.subject} save={props.save}>
+    <DbxForm {...props}>
       <DbxInput label='First Name' subject={firstName} />
       <DbxInput label='Last name' subject={lastName} />
       <DbxInput label='E-mail' subject={email} />

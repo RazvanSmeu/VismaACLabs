@@ -41,10 +41,8 @@ export function DbxInput(props: DbxInputProps) {
       {...props}
       value={value}
       onChange={setValue}
-      error={props.subject.validation.isInvalid}
-      helperText={
-        props.subject.validation.messages.length > 0 ? props.subject.validation.messages[0] : ''
-      }
+      error={props.subject.validation.invalid}
+      helperText={props.subject.validation.message}
     />
   )
 }

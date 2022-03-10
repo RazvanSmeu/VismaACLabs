@@ -25,11 +25,10 @@ export function LoginPanel(props: LoginPanelProps) {
 
   return (
     <>
-      {props.responseValidation.value.isInvalid && (
-        <ErrorPopup
-          message={props.responseValidation.value.messages.join('; ')}
-          close={() => props.responseValidation.set(Valid)}
-        />
+      {props.responseValidation.value.invalid && (
+        <ErrorPopup close={() => props.responseValidation.set(Valid)}>
+          {props.responseValidation.value.message}
+        </ErrorPopup>
       )}
       <DbxPanel className='login-panel__wrapper'>
         <h1 className='login-panel__header'>Welcome to Doubletex</h1>

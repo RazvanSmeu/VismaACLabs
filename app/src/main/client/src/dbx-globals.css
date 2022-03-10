@@ -2,21 +2,33 @@ root,
 input,
 button,
 * {
-  --main-hue: 250;
-  --main-sat: 36%;
+  --main-hue: 270;
+  --main-sat: 40%;
 
-  --main-lit: 32%;
-  --main-lit-hov: 40%;
-  --main-lit-foc: 26%;
+  --main-lit: 36%;
+  --main-lit-hov: 44%;
+  --main-lit-foc: 30%;
   --main-color: hsl(var(--main-hue), var(--main-sat), var(--main-lit));
   --main-color-hov: hsl(var(--main-hue), var(--main-sat), var(--main-lit-hov));
   --main-color-foc: hsl(var(--main-hue), var(--main-sat), var(--main-lit-foc));
+
+  --err-hue: 200;
+  --err-color: hsl(var(--err-hue), var(--main-sat), var(--main-lit));
+
+  --info-hue: var(--main-hue);
+  --info-color: hsl(var(--info-hue), var(--main-sat), var(--main-lit));
+
+  --success-hue: 100;
+  --success-color: hsl(var(--success-hue), var(--main-sat), var(--main-lit));
 
   --body-bg-lit: 97.5%;
   --body-bg-color: hsl(var(--main-hue), var(--main-sat), var(--body-bg-lit));
 
   --table-header-lit: 96%;
   --table-header-color: hsl(var(--main-hue), var(--main-sat), var(--table-header-lit));
+
+  --dbx-border: 1px solid #666 !important;
+  --dbx-border-radius: 4px;
 }
 
 button.MuiButton-contained {
