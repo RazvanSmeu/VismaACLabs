@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class  IdProxySerializer<T extends BaseEntity> extends StdSerializer<T> {
     public IdProxySerializer() {
@@ -19,8 +21,12 @@ public class  IdProxySerializer<T extends BaseEntity> extends StdSerializer<T> {
 
     @Override
     public void serialize(T t, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        if(HibernateProxy.class.isInstance(t)) {
-            HibernateProxy proxy = HibernateProxy.class.cast(t);
+        serializeHelper(t, jsonGenerator, serializerProvider);
+    }
+
+    private static <T extends BaseEntity> void serializeHelper(T t, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+        if(t instanceof HibernateProxy) {
+            HibernateProxy proxy = (HibernateProxy) t;
             if(proxy.getHibernateLazyInitializer().isUninitialized()) {
                 jsonGenerator.writeStartObject();
                 jsonGenerator.writeNumberField("id", t.getId());
@@ -34,7 +40,22 @@ public class  IdProxySerializer<T extends BaseEntity> extends StdSerializer<T> {
         }
     }
 
-//    public static class ForLists<T extends BaseEntity> extends StdSerializer<List<T>> {
-//
-//    }
+    public static class ForLists<T extends BaseEntity> extends StdSerializer<List<T>> {
+        public ForLists() {
+            this(null);
+        }
+
+        protected ForLists(Class<List<T>> t) {
+            super(t);
+        }
+
+        @Override
+        public void serialize(List<T> ts, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+            jsonGenerator.writeStartArray();
+            for(T t : ts) {
+                serializeHelper(t, jsonGenerator, serializerProvider);
+            }
+            jsonGenerator.writeEndArray();
+        }
+    }
 }

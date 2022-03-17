@@ -35,7 +35,6 @@ public class EmployeeAPI {
     }
 
     @PostMapping()
-    @ResponseBody
     public Employee create(@RequestBody Employee employee) {
         return employeeService.create(employee);
     }

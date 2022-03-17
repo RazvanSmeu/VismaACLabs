@@ -21,7 +21,7 @@ import java.util.Set;
  * @date 07.03.2022
  */
 
-@ControllerAdvice
+//@ControllerAdvice
 public class DoubletexControllerAdvice extends ResponseEntityExceptionHandler {
 
     @Getter

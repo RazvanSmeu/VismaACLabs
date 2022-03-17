@@ -18,6 +18,7 @@ export function useLoginPage(): LoginPageProps {
   async function doLogin() {
     try {
       const user = await USER_LOGIN.call(requestData.value)
+      sessionStorage.setItem('doubletex-app-user-token', user.latestToken)
       userSubject.set(user)
     } catch (e: any) {
       if ('invalid' in e) {

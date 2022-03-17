@@ -34,6 +34,14 @@ public class Validation extends RuntimeException {
         return this;
     }
 
+    public Validation allowIf(boolean condition) {
+        if(condition) {
+            return new Validation();
+        } else {
+            return this;
+        }
+    }
+
     public static Validation checkAll(Check... checks) {
         return new Validation().checking(checks);
     }

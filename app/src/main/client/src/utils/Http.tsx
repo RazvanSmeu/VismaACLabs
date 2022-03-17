@@ -91,6 +91,11 @@ export const Http = {
           url = url.replace('{id}', '' + body)
         }
       }
+      if (paramLocations.includes(ParamLocation.InQuery)) {
+        if (typeof body === 'number') {
+          params.set('id', '' + body)
+        }
+      }
     }
     if (paramLocations.includes(ParamLocation.InBody)) {
       info.body = JSON.stringify(body)

@@ -2,6 +2,8 @@ package com.doubletex.app.api.user;
 
 import com.doubletex.app.api.employee.Employee;
 import com.doubletex.app.api.employee.EmployeeRepository;
+import com.doubletex.app.api.user.invite.UserInvite;
+import com.doubletex.app.api.user.invite.UserInviteRepository;
 import com.doubletex.app.util.validation.Check;
 import com.doubletex.app.util.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,13 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final EmployeeRepository employeeRepository;
+    private final UserValidator validator;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, EmployeeRepository employeeRepository) {
+    public UserServiceImpl(UserRepository userRepository, EmployeeRepository employeeRepository, UserValidator validator) {
         this.userRepository = userRepository;
         this.employeeRepository = employeeRepository;
+        this.validator = validator;
     }
 
     protected User resolveUser(String userName, String password) {
@@ -46,9 +50,10 @@ public class UserServiceImpl implements UserService {
             );
         }
         user.setLatestToken(generateToken());
-        user.getEmployee().getCompany(); // populate
-        userRepository.save(user);
-        return user;
+        if(user.getEmployee() != null) {
+            user.getEmployee().getCompany(); // populate
+        }
+        return userRepository.save(user);
     }
 
     public User resume(String userToken) {
@@ -57,11 +62,11 @@ public class UserServiceImpl implements UserService {
             return userOptional.get();
         } else {
             throw new Validation(
-                    "User token was invalid. Try logging in again.",
-                    new Validation.Field(
-                            "token",
-                            "Invalid for user."
-                    )
+                "User token was invalid. Try logging in again.",
+                new Validation.Field(
+                    "token",
+                    "Invalid for user."
+                )
             );
         }
     }
@@ -77,27 +82,26 @@ public class UserServiceImpl implements UserService {
             throw new Validation("User already exists.");
         } else {
             User newUser = new User();
-            Employee employee = new Employee();
+//            Employee employee = new Employee();
             newUser.setUserName(userName);
             newUser.setPasswordHash(password);
             newUser.setSalt(generateToken());
             newUser.setLatestToken(generateToken());
-            newUser.setEmployee(employee);
-            employeeRepository.save(employee);
-            userRepository.save(newUser);
-            return newUser;
+//            newUser.setEmployee(employee);
+//            employeeRepository.save(employee);
+            return userRepository.save(newUser);
         }
     }
 
     public Validation validateUserName(String userName) {
         return Validation.checkAll(
             Check.that(
-                userName.length() > 16,
+                userName.length() < 16,
                 "userName",
                 "Cannot be longer thant 16 characters."
             ),
             Check.that(
-                userName.contains(" "),
+                !userName.contains(" "),
                 "userName",
                 "Cannot contain spaces"
             )
@@ -107,12 +111,12 @@ public class UserServiceImpl implements UserService {
     public Validation validatePassword(String password) {
         return Validation.checkAll(
             Check.that(
-                password.length() > 16,
+                password.length() < 16,
                 "password",
                 "Cannot be longer than 16 characters"
             ),
             Check.that(
-                password.contains(" "),
+                !password.contains(" "),
                 "password",
                 "Cannot contain spaces."
             )

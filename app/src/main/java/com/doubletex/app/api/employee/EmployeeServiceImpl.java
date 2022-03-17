@@ -48,6 +48,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .validate(employee)
                 .checking(Check.hasNoId(employee))
                 .throwIfNecessary();
+        employee.setCompany(Credentials.getEmployee().getCompany());
+        Credentials.getEmployee().getCompany().getEmployees().add(employee);
+        companyRepository.save(Credentials.getEmployee().getCompany());
         return employeeRepository.save(employee);
     }
 

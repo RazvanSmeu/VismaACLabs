@@ -9,8 +9,9 @@ export type User = {
   id: number
   userName: UserName
   password: Password
-  lastToken: UserToken
+  latestToken: UserToken
   isTokenFrozen: boolean
+  employee?: { id: number }
 }
 
 export type LoginRequest = {

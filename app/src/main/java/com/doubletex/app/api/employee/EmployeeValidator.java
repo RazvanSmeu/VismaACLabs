@@ -11,16 +11,14 @@ public class EmployeeValidator extends Validator<Employee> {
     @Validates
     public Validation getFirstName(String firstName) {
         return Validation.checkAll(
-            Check.notNull(firstName, "firstName"),
-            Check.notEmpty(firstName, "firstName")
+            Check.notNull(firstName, "firstName")
         );
     }
 
     @Validates
     public Validation getEmail(String email) {
         return Validation.checkAll(
-            Check.notEmpty(email, "email"),
             Check.that(email.contains("@"), "email", "Must contain '@'")
-        );
+        ).allowIf(email.isEmpty());
     }
 }
