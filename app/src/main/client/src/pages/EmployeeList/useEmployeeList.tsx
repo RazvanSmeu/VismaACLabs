@@ -1,5 +1,5 @@
 import { EmployeeListFilterOperation, EmployeeListPageProps } from './EmployeeListPage'
-import { Employee } from '../../types/Employee'
+import { Employee, EMPLOYEE_SEARCH } from '../../types/Employee'
 import { useDataBook } from '../../utils/useDataBook'
 import * as faker from 'faker'
 import { Filter } from '../../utils/Filter'
@@ -28,7 +28,7 @@ function mockFilterInterpreter(employee: Employee, filter: Filter<EmployeeListFi
 }
 
 export function useEmployeeList(): EmployeeListPageProps {
-  const scribe = NetworkScribe<Employee, EmployeeListFilterOperation>('/api/employee/dataBookQuery')
+  const scribe = NetworkScribe<Employee, EmployeeListFilterOperation>(EMPLOYEE_SEARCH)
   const dataBook = useDataBook(scribe, 2)
   return {
     employeesBook: evolveBookControls(dataBook)

@@ -1,31 +1,50 @@
 import { useStorage } from './useStorage'
 import { Subject } from '../Subject'
 
-export enum Persistence {
-  Local,
-  Session
-}
-
 export type StorageSpec<T> = {
   readonly label: string
-  readonly type: Persistence
   readonly defaultValue: T
-  useSpec(): Subject<T>
+  read(): T
+  write(t: T): void
+  clear(): void
+  useAsSubject(): Subject<T>
 }
 
-export function StorageSpec<T>(type: Persistence, label: string, defaultValue: T): StorageSpec<T> {
-  const spec: StorageSpec<T> = {
-    label,
-    type,
-    defaultValue,
-    useSpec
+export function StorageSpec<T>(label: string, defaultValue: T): StorageSpec<T> {
+  function read(): T {
+    const storedValue = localStorage.getItem(label)
+    if (storedValue !== null) {
+      return JSON.parse(storedValue)
+    } else {
+      return defaultValue
+    }
   }
 
-  function useSpec(): Subject<T> {
+  function write(t: T): void {
+    const result = localStorage.setItem(label, JSON.stringify(t))
+    window.dispatchEvent(new Event('storage'))
+    return result
+  }
+
+  function clear() {
+    localStorage.removeItem(label)
+    window.dispatchEvent(new Event('storage'))
+  }
+
+  const spec: StorageSpec<T> = {
+    label,
+    defaultValue,
+    useAsSubject,
+    read,
+    write,
+    clear
+  }
+
+  function useAsSubject(): Subject<T> {
     return useStorage(spec)
   }
   return spec
 }
 
-export const SearchSpec = StorageSpec<string>(Persistence.Local, 'SEARCH_QUERY', '')
-export const TokenSpec = StorageSpec<string | null>(Persistence.Session, 'SESSION_KEY', null)
+export const SearchSpec = StorageSpec<string>('SEARCH_QUERY', '')
+export const TokenSpec = StorageSpec<string | null>('SESSION_KEY', null)

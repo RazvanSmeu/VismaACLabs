@@ -1,20 +1,20 @@
 package com.doubletex.app.util.validation;
 
 import java.lang.reflect.Method;
+import java.util.Locale;
 
-public class Validator<T> {
-    public Validation validate(T object) {
+public interface Validable {
+    default Validation validate() {
         Method[] validatorMethods = this.getClass().getMethods();
         Validation validation = new Validation();
         for(Method method : validatorMethods) {
-            if(method.isAnnotationPresent(Validates.class) &&
-                method.getParameterCount() == 1 &&
+            if(method.getAnnotation(ValidatesStructure.class) != null &&
+                method.getName().startsWith("validate") &&
+                method.getParameterCount() == 0 &&
                 method.getReturnType() == Validation.class
             ) {
                 try {
-                    Method getterMethod = object.getClass().getMethod(method.getName());
-                    Object gottenValue = getterMethod.invoke(object);
-                    Validation gottenValidation = (Validation) method.invoke(this, gottenValue);
+                    Validation gottenValidation = (Validation) method.invoke(this);
                     validation = validation.and(gottenValidation);
                 } catch (ReflectiveOperationException e) {
                     // It's fine

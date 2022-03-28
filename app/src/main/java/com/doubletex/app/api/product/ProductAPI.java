@@ -1,5 +1,6 @@
 package com.doubletex.app.api.product;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,14 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/product")
+@RequiredArgsConstructor
 public class ProductAPI {
 
     private final ProductService productService;
-
-    @Autowired
-    public ProductAPI(ProductService productService) {
-        this.productService = productService;
-    }
 
     @GetMapping("/{id}")
     public Product get(@PathVariable Long id) {

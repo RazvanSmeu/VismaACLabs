@@ -1,3 +1,4 @@
+import { Endpoint } from './Endpoint'
 import { Filter, FilterOperation } from './Filter'
 
 /**
@@ -32,27 +33,28 @@ export type Scribe<T, Ops extends FilterOperation> = (
  * @returns Scribe that writes T objects and uses filters with Ops operations
  */
 export function NetworkScribe<T, Ops extends FilterOperation>(
-  url: string,
+  endpoint: Endpoint<PageRequest<Ops>, PageResponse<T>>,
   additionalInfo?: RequestInit
 ): Scribe<T, Ops> {
   return async (request) => {
-    const requestInfo = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      ...additionalInfo,
-      body: JSON.stringify(request)
-    }
-    const fetchResponse = await fetch(url, requestInfo)
-    const response = await fetchResponse.json()
+    // const requestInfo = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json; charset=utf-8'
+    //   },
+    //   ...additionalInfo,
+    //   body: JSON.stringify(request)
+    // }
+    const response = await endpoint.call(request)
+    // const fetchResponse = await fetch(url, requestInfo)
+    // const response = await fetchResponse.json()
     if (response.pageLimit === undefined) {
       throw new Error('Page limit was missing from network request.')
     }
     if (response.page === undefined) {
       throw new Error('Page was missing from network request.')
     }
-    return response as any
+    return response
   }
 }
 

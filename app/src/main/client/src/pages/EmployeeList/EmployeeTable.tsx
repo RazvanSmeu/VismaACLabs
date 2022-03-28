@@ -25,7 +25,10 @@ export function EmployeeTable({ employeesBook }: EmployeeTableProps) {
   return (
     <TableContainer component={Paper} className={'employeeTable'}>
       <TableToolbar book={evolveBookControls(employeesBook)}>
-        <IconButton>
+        <IconButton
+          onClick={() => {
+            window.location.href = '/employee'
+          }}>
           <PlusOneSharp />
         </IconButton>
       </TableToolbar>

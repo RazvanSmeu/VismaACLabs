@@ -1,29 +1,17 @@
 package com.doubletex.app.api.user;
 
-import com.doubletex.app.api.employee.Employee;
-import com.doubletex.app.api.employee.EmployeeRepository;
-import com.doubletex.app.api.user.invite.UserInvite;
-import com.doubletex.app.api.user.invite.UserInviteRepository;
 import com.doubletex.app.util.validation.Check;
 import com.doubletex.app.util.validation.Validation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final EmployeeRepository employeeRepository;
-    private final UserValidator validator;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, EmployeeRepository employeeRepository, UserValidator validator) {
-        this.userRepository = userRepository;
-        this.employeeRepository = employeeRepository;
-        this.validator = validator;
-    }
 
     protected User resolveUser(String userName, String password) {
         validateUserName(userName).and(validatePassword(password)).throwIfNecessary();
@@ -82,13 +70,10 @@ public class UserServiceImpl implements UserService {
             throw new Validation("User already exists.");
         } else {
             User newUser = new User();
-//            Employee employee = new Employee();
             newUser.setUserName(userName);
             newUser.setPasswordHash(password);
             newUser.setSalt(generateToken());
             newUser.setLatestToken(generateToken());
-//            newUser.setEmployee(employee);
-//            employeeRepository.save(employee);
             return userRepository.save(newUser);
         }
     }
@@ -145,5 +130,10 @@ public class UserServiceImpl implements UserService {
         user.setLatestToken(generateToken());
         userRepository.save(user);
         return user;
+    }
+
+
+    public Optional<User> findByUserName(String userName) {
+        return userRepository.findByUserName(userName);
     }
 }

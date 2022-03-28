@@ -3,6 +3,7 @@ import { Box } from '@mui/system'
 import React from 'react'
 import { DbxPanel } from '../../../components/DbxPanel'
 import { DbxInput } from '../../../components/Input/DbxInput'
+import { USER_SESSION } from '../../../types/User'
 import { UserInviteInfo } from '../../../types/UserInvite'
 import { useSubject } from '../../../utils/Subject'
 import './CompanyWizard.css'
@@ -48,7 +49,15 @@ export function CompanyInvitation(props: CompanyJoinInfo) {
           </TableBody>
         </Table>
         <div>
-          <Button variant='contained'>Accept</Button>
+          <Button
+            variant='contained'
+            onClick={() => {
+              if (props.invite) {
+                props.doJoin(props.invite.id)
+              }
+            }}>
+            Accept
+          </Button>
           <Button variant='contained'>Reject</Button>
         </div>
       </div>
@@ -67,7 +76,13 @@ export function CompanyWizard(props: CompanyWizardProps) {
         <div className='company-wizard__join-side'>
           <h1>New Company</h1>
           <DbxInput subject={companyName} label='Name' />
-          <Button variant='contained'>Create Company</Button>
+          <Button
+            variant='contained'
+            onClick={() => {
+              props.doCreate(companyName.value)
+            }}>
+            Create Company
+          </Button>
         </div>
         <Divider orientation='vertical' variant='fullWidth' />
         <div className='company-wizard__create-side'>
@@ -79,9 +94,8 @@ export function CompanyWizard(props: CompanyWizardProps) {
         <Button
           variant='contained'
           onClick={() => {
-            sessionStorage.removeItem('doubletex-app-user-token')
-            sessionStorage.removeItem('doubletex-app-user')
-            window.location.reload()
+            USER_SESSION.clear()
+            // window.location.reload()
           }}>
           Logout
         </Button>

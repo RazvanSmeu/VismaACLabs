@@ -4,6 +4,7 @@ import com.doubletex.app.exceptions.DoubletexNotFound;
 import com.doubletex.app.util.Validations;
 import com.doubletex.app.util.validation.Check;
 import com.doubletex.app.util.validation.Validation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +17,9 @@ import java.math.BigDecimal;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-
     private final ProductRepository productRepository;
-
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     public Validation validateCreate2(Product product) {
         log.debug(String.valueOf(product));

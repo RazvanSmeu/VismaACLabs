@@ -6,6 +6,7 @@ import GroupIcon from '@mui/icons-material/Group'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import { Box } from '@mui/system'
 import { AccountBox, Inventory, Logout, Work } from '@mui/icons-material'
+import { USER_SESSION } from '../../types/User'
 
 function redirect(path: string) {
   return () => (window.location.href = path)
@@ -58,8 +59,7 @@ export function DoubleTexAppBar() {
           disableElevation
           variant='contained'
           onClick={() => {
-            sessionStorage.removeItem('doubletex-app-user')
-            window.dispatchEvent(new Event('storage'))
+            USER_SESSION.clear()
           }}>
           Logout
         </Button>

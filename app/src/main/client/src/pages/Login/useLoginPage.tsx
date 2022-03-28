@@ -13,12 +13,11 @@ export function useLoginPage(): LoginPageProps {
   const userName = useSubjectField(requestData, 'userName')
   const password = useSubjectField(requestData, 'password')
   const responseValidation = useSubject(Valid)
-  const userSubject = USER_SESSION.useSpec()
+  const userSubject = USER_SESSION.useAsSubject()
 
   async function doLogin() {
     try {
       const user = await USER_LOGIN.call(requestData.value)
-      sessionStorage.setItem('doubletex-app-user-token', user.latestToken)
       userSubject.set(user)
     } catch (e: any) {
       if ('invalid' in e) {

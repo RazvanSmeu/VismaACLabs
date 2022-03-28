@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { USER_SESSION } from '../../../types/User'
+import { USER_RESUME, USER_SESSION } from '../../../types/User'
 import {
   ACCEPT_INVITE,
   CREATE_COMPANY,
@@ -31,7 +31,7 @@ export function useTestCompanyWizard(haveInvite: boolean): CompanyWizardProps {
 }
 
 export function useCompanyWizard(): CompanyWizardProps {
-  const user = USER_SESSION.useSpec()
+  const user = USER_SESSION.useAsSubject()
   const invite = useSubject<UserInviteInfo | undefined>(undefined)
   if (user.value == undefined) throw 'User not defined'
 
@@ -49,12 +49,14 @@ export function useCompanyWizard(): CompanyWizardProps {
     invite: invite.value,
     async doJoin() {
       if (invite.value !== undefined) {
-        const newUser = await ACCEPT_INVITE.call(invite.value.id)
+        const newUser = await ACCEPT_INVITE.call({ inviteId: invite.value.id })
         user.set(newUser)
       }
     },
     async doCreate(name: string) {
-      const newUser = await CREATE_COMPANY.call({ name })
+      await CREATE_COMPANY.call({ name })
+      if (user.value == undefined) throw 'User not defined'
+      const newUser = await USER_RESUME.call({ userToken: user.value?.latestToken })
       user.set(newUser)
     }
   }

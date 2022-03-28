@@ -1,6 +1,5 @@
 package com.doubletex.app.api.user;
 
-import javax.xml.bind.ValidationException;
 import java.util.Optional;
 
 public interface UserService {
@@ -9,4 +8,6 @@ public interface UserService {
     User register(String userName, String password);
     User freezeToken(String userName, String password);
     User meltToken(String userName, String password);
+
+    Optional<User> findByUserName(String userName);
 }

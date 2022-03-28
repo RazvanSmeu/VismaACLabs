@@ -10,7 +10,7 @@ import { useLoginPage } from './pages/Login/useLoginPage'
 import { USER_SESSION } from './types/User'
 
 function App() {
-  const userSubject = USER_SESSION.useSpec()
+  const userSubject = USER_SESSION.useAsSubject()
   const loginPageProps = useLoginPage()
 
   let page: React.ReactNode

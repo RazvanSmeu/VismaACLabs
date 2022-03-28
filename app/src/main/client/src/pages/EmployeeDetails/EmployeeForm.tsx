@@ -12,10 +12,10 @@ import { validatePhoneNumber } from '../../utils/validation/PhoneNumberValidatio
 export type EmployeeFormProps = DbxFormProps<Employee>
 
 export function EmployeeForm(props: EmployeeFormProps) {
-  const firstName = useSubjectField(props.subject, 'firstName', validateName)
+  const firstName = useSubjectField(props.subject, 'firstName')
   const lastName = useSubjectField(props.subject, 'lastName')
-  const email = useSubjectField(props.subject, 'email', validateEmail)
-  const phoneNumber = useSubjectField(props.subject, 'phoneNumber', validatePhoneNumber)
+  const email = useSubjectField(props.subject, 'email')
+  const userName = useSubjectField(props.subject, 'userName')
   const birthdate: Subject<string> = useSubjectField(props.subject, 'birthdate')
   const jobTitle = useSubjectField(props.subject, 'jobTitle')
   const monthlySalary = useSubjectField(props.subject, 'monthlySalary')
@@ -26,7 +26,7 @@ export function EmployeeForm(props: EmployeeFormProps) {
       <DbxInput label='First Name' subject={firstName} />
       <DbxInput label='Last name' subject={lastName} />
       <DbxInput label='E-mail' subject={email} />
-      <DbxInput label='Phone number' subject={phoneNumber} />
+      <DbxInput label='User' subject={userName} />
       <DbxDatePicker label='Birthdate' subject={birthdate} />
       <DbxInput label='Job Title' subject={jobTitle} />
       <DbxInput label='Salary' type='number' subject={monthlySalary} />

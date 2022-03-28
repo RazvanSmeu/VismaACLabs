@@ -1,4 +1,6 @@
-import { CrudAPI, CrudMethod, Endpoint, ParamLocation } from '../utils/Http'
+import { EmployeeListFilterOperation } from '../pages/EmployeeList/EmployeeListPage'
+import { CrudAPI, CrudMethod, Endpoint, ParamLocation } from '../utils/Endpoint'
+import { PageRequest, PageResponse } from '../utils/Scribe'
 import { Identifiable } from './Identifiable'
 
 export type Employee = Identifiable & {
@@ -9,7 +11,7 @@ export type Employee = Identifiable & {
   monthlyHourQuota: number
   jobTitle: string
   email: string
-  phoneNumber: string
+  userName: string
 }
 
 export const EMPLOYEE_TEMPLATE = {
@@ -20,7 +22,7 @@ export const EMPLOYEE_TEMPLATE = {
   monthlySalary: 0,
   monthlyHourQuota: 0,
   email: '',
-  phoneNumber: '',
+  userName: '',
   jobTitle: ''
 }
 
@@ -30,3 +32,8 @@ export const EmployeeAPI: CrudAPI<Employee> = {
   POST: Endpoint(CrudMethod.POST, '/api/employee', ParamLocation.InBody),
   DELETE: Endpoint(CrudMethod.DELETE, '/api/employee/{id}', ParamLocation.Id)
 }
+
+export const EMPLOYEE_SEARCH = Endpoint<
+  PageRequest<EmployeeListFilterOperation>,
+  PageResponse<Employee>
+>(CrudMethod.POST, '/api/employee/search', ParamLocation.InBody)

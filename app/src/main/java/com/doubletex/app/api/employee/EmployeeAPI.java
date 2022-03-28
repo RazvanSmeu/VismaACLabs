@@ -3,9 +3,11 @@ package com.doubletex.app.api.employee;
 import com.doubletex.app.util.PageRequest;
 import com.doubletex.app.util.PageResponse;
 import com.doubletex.app.util.validation.Validation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -14,13 +16,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/employee")
+@RequiredArgsConstructor
 public class EmployeeAPI {
     private final EmployeeService employeeService;
-
-    @Autowired
-    public EmployeeAPI(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
 
     @GetMapping("/{id}")
     @ResponseBody
@@ -35,12 +33,12 @@ public class EmployeeAPI {
     }
 
     @PostMapping()
-    public Employee create(@RequestBody Employee employee) {
+    public Employee create(@Valid @RequestBody Employee employee) {
         return employeeService.create(employee);
     }
 
     @PutMapping()
-    public Employee update(@RequestBody Employee employee) {
+    public Employee update(@Valid @RequestBody Employee employee) {
         return employeeService.update(employee);
     }
 
@@ -56,7 +54,7 @@ public class EmployeeAPI {
 //        return employeeService.delete(id);
     }
 
-    @PostMapping("/dataBookQuery")
+    @PostMapping("/search")
     public PageResponse<Employee> search(@RequestBody PageRequest<EmployeeService.FilterOperation> request) {
         return employeeService.dataBookQuery(request);
     }

@@ -1,30 +1,26 @@
-import { CrudMethod, Endpoint, ParamLocation } from '../utils/Http'
-import { Persistence, StorageSpec } from '../utils/storage/Storage'
-
-type UserToken = string
-type UserName = string
-type Password = string
+import { CrudMethod, Endpoint, ParamLocation } from '../utils/Endpoint'
+import { StorageSpec } from '../utils/storage/Storage'
 
 export type User = {
   id: number
-  userName: UserName
-  password: Password
-  latestToken: UserToken
+  userName: string
+  password: string
+  latestToken: string
   isTokenFrozen: boolean
   employee?: { id: number }
 }
 
 export type LoginRequest = {
-  userName: UserName
-  password: Password
+  userName: string
+  password: string
 }
 
 export type ResumeRequest = {
-  userToken: UserToken
+  userToken: string
 }
 
 export const USER_LOGIN = Endpoint<LoginRequest, User>(
-  CrudMethod.GET,
+  CrudMethod.PUT,
   '/api/user/login',
   ParamLocation.InQuery
 )
@@ -34,19 +30,9 @@ export const USER_RESUME = Endpoint<ResumeRequest, User>(
   ParamLocation.InQuery
 )
 export const USER_REGISTER = Endpoint<LoginRequest, User>(
-  CrudMethod.PUT,
+  CrudMethod.POST,
   '/api/user/register',
   ParamLocation.InQuery
 )
 
-export const USER_SESSION = StorageSpec<User | undefined>(
-  Persistence.Session,
-  'doubletex-app-user',
-  undefined
-)
-
-export const USER_TOKEN = StorageSpec<string | undefined>(
-  Persistence.Session,
-  'doubletex-app-user-token',
-  undefined
-)
+export const USER_SESSION = StorageSpec<User | undefined>('doubletex-app-user', undefined)

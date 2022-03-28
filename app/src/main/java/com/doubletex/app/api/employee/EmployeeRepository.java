@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 /**
  * @author Alexandru Enache
  */
@@ -16,6 +18,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Employee findByName(@Param("name") String name);
 
     @Query("SELECT e FROM Employee e " +
-            "WHERE CONCAT(e.firstName, ' ', e.lastName) like %:name%")
-    Page<Employee> search(@Param("name") String name, Pageable pageable);
+            "WHERE e.company.id = :companyId " +
+            "AND CONCAT(e.firstName, ' ', e.lastName) like %:name%")
+    Page<Employee> search(long companyId, String name, Pageable pageable);
 }

@@ -3,6 +3,7 @@ package com.doubletex.app.api.user;
 import com.doubletex.app.api.user.invite.UserInvite;
 import com.doubletex.app.api.user.invite.UserInviteService;
 import com.doubletex.app.util.Credentials;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,17 +11,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/user")
+@RequiredArgsConstructor
 public class UserAPI {
     private final UserService userService;
     private final UserInviteService userInviteService;
 
-    @Autowired
-    public UserAPI(UserService userService, UserInviteService userInviteService) {
-        this.userService = userService;
-        this.userInviteService = userInviteService;
-    }
-
-    @GetMapping("/login")
+    @PutMapping("/login")
     @ResponseBody
     public User login(
         @RequestParam String userName,
@@ -29,7 +25,7 @@ public class UserAPI {
         return userService.login(userName, password);
     }
 
-    @GetMapping("/resume")
+    @PutMapping("/resume")
     @ResponseBody
     public User resume(
             @RequestParam String userToken
@@ -37,7 +33,7 @@ public class UserAPI {
         return userService.resume(userToken);
     }
 
-    @PutMapping("/register")
+    @PostMapping("/register")
     @ResponseBody
     public User register(
             @RequestParam String userName,
@@ -46,7 +42,7 @@ public class UserAPI {
         return userService.register(userName, password);
     }
 
-    @GetMapping("/freezeToken")
+    @PutMapping("/freezeToken")
     @ResponseBody
     public User freezeToken(
         @RequestParam String userName,
@@ -55,7 +51,7 @@ public class UserAPI {
         return userService.freezeToken(userName, password);
     }
 
-    @GetMapping("/meltToken")
+    @PutMapping("/meltToken")
     @ResponseBody
     public User meltToken(
         @RequestParam String userName,
@@ -66,10 +62,10 @@ public class UserAPI {
 
     @PostMapping("/sendInvite")
     public void sendInvite(
-        @RequestParam long userId,
+        @RequestParam String userName,
         @RequestParam long employeeId
     ) {
-        userInviteService.sendInvite(userId, employeeId);
+        userInviteService.sendInvite(userName, employeeId);
     }
 
     @GetMapping(value = "/nextInvite", produces = "application/json")
@@ -78,7 +74,7 @@ public class UserAPI {
         return userInviteService.getNextInvite();
     }
 
-    @PostMapping("/acceptInvite")
+    @PutMapping("/acceptInvite")
     public void acceptInvite(@RequestParam long inviteId) {
         userInviteService.acceptInvite(inviteId);
     }

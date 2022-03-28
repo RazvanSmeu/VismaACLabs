@@ -1,5 +1,5 @@
 import { Identifiable } from './Identifiable'
-import { CrudMethod, Endpoint, ParamLocation } from '../utils/Http'
+import { CrudMethod, Endpoint, ParamLocation } from '../utils/Endpoint'
 
 export interface Product extends Identifiable {
   name: string
