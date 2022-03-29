@@ -42,6 +42,16 @@ node --version
 making quick queries and connecting to the server and `MySQL Shell` for a 
 command line interface for MySQL
 
+* Next wait for the download to finish and set up a password 
+* After everything is done you should be able to connect to the server using MySQL workbench
+* To connect to the server using the shell just go to the folder where the MySQL is saved 
+
+`cd C:\Program Files\MySQL\MySQL Server 8.0\bin`
+
+and to connect:
+
+`mysql -u root -p` and type the password
+
 ##Intellij
 
 * Download Intellij from [here](https://www.jetbrains.com/idea/download/#section=windows)
