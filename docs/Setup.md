@@ -1,4 +1,4 @@
-#Set up for the project
+# Set up for the project
 
 ## Java
 
@@ -16,7 +16,7 @@ To see if it was installed correctly run:
 java --version
 ```
 
-##Node and NPM
+## Node and NPM
 
 * Download Node from [here](https://nodejs.org/en/download/).
 * Select `16.14.2 LTS`
@@ -29,7 +29,7 @@ npm --version
 node --version
 ```
 
-##MySQL
+## MySQL
 
 * Download MySQL from [here](https://dev.mysql.com/downloads/installer/)
 * Click `Windows (x86, 32-bit), MSI Installer`
@@ -52,7 +52,7 @@ and to connect:
 
 `mysql -u root -p` and type the password
 
-##Intellij
+## Intellij
 
 * Download Intellij from [here](https://www.jetbrains.com/idea/download/#section=windows)
 * Select ultimate edition
