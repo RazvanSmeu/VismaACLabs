@@ -36,7 +36,7 @@ node --version
 * Open the installer and in the installation type click `custom`
 * Select the options as shown in the picture below
 
-<img src="./pictures/MySQL.PNG" width="512" display="block"/>
+<img src="./pictures/MySQL.PNG" width="787"/>
 
 `MySQL Server` is for running the server, `MySQL Workbench` is an IDE for 
 making quick queries and connecting to the server and `MySQL Shell` for a 
